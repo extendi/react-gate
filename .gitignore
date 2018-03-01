@@ -1,0 +1,21 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+node_modules/
+.DS_Store
+package-lock.json
+test/dist
+test/input
+coverage
+.nyc_output
+.cache
+dist
+lib
+!test/**/node_modules
+.vscode/
+build/*
+DockerFile
+*.conf
+*.sh
+.idea/
+*.min.js
+.dockerignore
+localTesting/
