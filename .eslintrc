@@ -1,5 +1,8 @@
 {
-  "extends": "airbnb",
+  "extends": [
+     "airbnb",
+     "plugin:flowtype/recommended"
+  ],
   "parser": "babel-eslint",
   "rules": {
     "react/no-array-index-key": 0,
@@ -24,10 +27,16 @@
         }
     }]
   },
+  "plugins": [
+      "flowtype"
+  ],
   "settings": {
       "import/resolver": {
           "babel-module": {}
       }
+  },
+  "env": {
+      "jest": true
   },
   "globals": {
     "window": true,

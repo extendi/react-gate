@@ -1,5 +1,5 @@
 {
-  "presets": ["es2015","env", "react","stage-0"],
+  "presets": ["es2015","env", "react","stage-0","flow"],
   "plugins": [
     ["transform-object-rest-spread"],
     ["transform-function-bind"],
