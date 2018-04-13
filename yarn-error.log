@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js test --coverage
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js update webpack
 
 PATH: 
-  /Users/cdimonaco/.rvm/gems/ruby-2.4.1/bin:/Users/cdimonaco/.rvm/gems/ruby-2.4.1@global/bin:/Users/cdimonaco/.rvm/rubies/ruby-2.4.1/bin:/Users/cdimonaco/.zplug/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/cdimonaco/.fzf/bin:/Users/cdimonaco/.rvm/bin
+  /Users/cdimonaco/.rvm/gems/ruby-2.4.1/bin:/Users/cdimonaco/.rvm/gems/ruby-2.4.1@global/bin:/Users/cdimonaco/.rvm/rubies/ruby-2.4.1/bin:/Users/cdimonaco/.zplug/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/cdimonaco/.rvm/bin:/Users/cdimonaco/.fzf/bin
 
 Yarn version: 
   1.5.1
@@ -52,6 +52,7 @@ npm manifest:
       "jest": "^22.4.2",
       "jest-enzyme": "^5.0.3",
       "react-hot-loader": "^4.0.0",
+      "uglifyjs-webpack-plugin": "^1.2.4",
       "webpack": "^4.0.1",
       "webpack-cli": "^2.0.9",
       "webpack-dev-server": "^3.1.0"
@@ -1502,7 +1503,7 @@ Lockfile:
     version "3.0.0"
     resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
   
-  cacache@^10.0.1:
+  cacache@^10.0.1, cacache@^10.0.4:
     version "10.0.4"
     resolved "https://registry.yarnpkg.com/cacache/-/cacache-10.0.4.tgz#6452367999eff9d4188aefd9a14e9d7c6a263460"
     dependencies:
@@ -7343,6 +7344,19 @@ Lockfile:
       webpack-sources "^1.1.0"
       worker-farm "^1.5.2"
   
+  uglifyjs-webpack-plugin@^1.2.4:
+    version "1.2.4"
+    resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.4.tgz#5eec941b2e9b8538be0a20fc6eda25b14c7c1043"
+    dependencies:
+      cacache "^10.0.4"
+      find-cache-dir "^1.0.0"
+      schema-utils "^0.4.5"
+      serialize-javascript "^1.4.0"
+      source-map "^0.6.1"
+      uglify-es "^3.3.4"
+      webpack-sources "^1.1.0"
+      worker-farm "^1.5.2"
+  
   uid-number@^0.0.6:
     version "0.0.6"
     resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
@@ -7980,16 +7994,14 @@ Lockfile:
       untildify "^3.0.2"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: sh
-  Arguments: -c jest --coverage
-  Directory: /Users/cdimonaco/code/extendi/frontend/cerberus-redux-auth
-  Output:
-  
-      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
-      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:226:113)
-      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:30281:17)
-      at ChildProcess.emit (events.js:160:13)
-      at maybeClose (internal/child_process.js:943:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
+  Error: Command "update" not found.
+      at new MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87307:17
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:98:30)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:116:14
+      at new Promise (<anonymous>)
+      at new F (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:23451:28)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:95:12
+      at runCommand (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87312:22)
+      at Object.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87412:14)
