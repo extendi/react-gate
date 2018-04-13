@@ -1,12 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { shallow, mount, render } from 'enzyme';
+import EnzymeAdapter from 'enzyme-adapter-react-16';
+import Enzyme, { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import CerberusAuth from '../../cerberus';
-import Enzyme from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
 
+/* eslint-disable max-len */
 const mockedStore = configureStore();
 const CustomAction = result => ({ type: 'CUSTOM_ACTION', auth: result });
 
@@ -18,8 +18,8 @@ const normalCerberusConfig = {
 };
 
 const ProtectedComponent = (props) => {
-  console.log('diocane', props)
- return  <div id="protected">I am super protected!</div>
+  console.log('diocane', props);
+  return <div id="protected">I am super protected!</div>;
 };
 
 const NoAuthComponent = () => (
@@ -84,5 +84,83 @@ describe('RouteLocker component', () => {
     expect(wrapper.find('#protected').length).toEqual(1);
     const actionsFired = mockStore.getActions();
     expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
+  });
+
+  it('Should block access to admin users and fire redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({ ...normalCerberusConfig, reduxAction: CustomAction });
+    const adminHOC = cerberusInstance.getHOCForRole('admin');
+    const mockStore = mockedStore({ role: 'basic' });
+    const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    const actionsFired = mockStore.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authFailed' }]);
+  });
+
+  it('Should consent access to logged users and fire redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({ ...normalCerberusConfig, reduxAction: CustomAction });
+    const adminHOC = cerberusInstance.getHOCForLogin();
+    const mockStore = mockedStore({ logged: true });
+    const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#protected').length).toEqual(1);
+    const actionsFired = mockStore.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
+  });
+
+  it('Should block access to logged users and fire redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({ ...normalCerberusConfig, reduxAction: CustomAction });
+    const adminHOC = cerberusInstance.getHOCForLogin();
+    const mockStore = mockedStore({ logged: false });
+    const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    const actionsFired = mockStore.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authFailed' }]);
+  });
+
+  it('Should consent access to admin users with write/read permission and fire redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({
+      ...normalCerberusConfig,
+      reduxAction: CustomAction,
+      permissions: [{ name: 'write', predicates: [state => state.canWrite, state => state.canRead] }],
+    });
+    const adminHOC = cerberusInstance.getHOCForRole('admin', 'write');
+    const mockStore = mockedStore({ role: 'admin', canWrite: true, canRead: true });
+    const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#protected').length).toEqual(1);
+    const actionsFired = mockStore.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
+  });
+
+  it('Should block access to basic users without write/read permission and fire redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({
+      ...normalCerberusConfig,
+      reduxAction: CustomAction,
+      permissions: [{ name: 'write', predicates: [state => state.canWrite, state => state.canRead] }],
+    });
+    const adminHOC = cerberusInstance.getHOCForRole('basic', 'write');
+    const mockStore = mockedStore({ role: 'basic', canWrite: true, canRead: false });
+    const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    const actionsFired = mockStore.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authFailed' }]);
+  });
+
+  it('Should block access to admin users with write/read permission because his role is not basic and fire redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({
+      ...normalCerberusConfig,
+      reduxAction: CustomAction,
+      permissions: [{ name: 'wr', predicates: [state => state.canWrite, state => state.canRead] }],
+    });
+    const adminHOC = cerberusInstance.getHOCForRole('basic', 'wr');
+    const mockStore = mockedStore({ role: 'admin', canWrite: true, canRead: false });
+    const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    const actionsFired = mockStore.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authFailed' }]);
   });
 });
