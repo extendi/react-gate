@@ -8,6 +8,7 @@ import Enzyme from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
 
 const mockedStore = configureStore();
+const CustomAction = result => ({ type: 'CUSTOM_ACTION', auth: result });
 
 const normalCerberusConfig = {
   roles: ['admin', 'basic'],
@@ -16,7 +17,6 @@ const normalCerberusConfig = {
   redirectPath: '/noauth',
 };
 
-const CustomAction = { type: 'CUSTOM_ACTION' };
 const ProtectedComponent = (props) => {
   console.log('diocane', props)
  return  <div id="protected">I am super protected!</div>
@@ -73,5 +73,16 @@ describe('RouteLocker component', () => {
     const ConfiguredDom = RouteSkeleton(mockedStore({ role: 'admin' }), adminHOC);
     const wrapper = mount(<ConfiguredDom />);
     expect(wrapper.find('#protected').length).toEqual(1);
+  });
+
+  it('Should consent access to admin users and fire redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({ ...normalCerberusConfig, reduxAction: CustomAction });
+    const adminHOC = cerberusInstance.getHOCForRole('admin');
+    const mockStore = mockedStore({ role: 'admin' });
+    const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#protected').length).toEqual(1);
+    const actionsFired = mockStore.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
   });
 });

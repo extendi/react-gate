@@ -24,7 +24,7 @@ const mapStateToProps = (authConfig, permissions) => state => ({
 });
 
 const mapDispatchToProps = ({ reduxAction }) => dispatch => ({
-  action: reduxAction ? () => dispatch(reduxAction()) : undefined,
+  action: reduxAction ? result => dispatch(reduxAction(result)) : undefined,
 });
 
 const RouteLocker = (
