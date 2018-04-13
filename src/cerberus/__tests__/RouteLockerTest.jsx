@@ -156,7 +156,7 @@ describe('RouteLocker component', () => {
       permissions: [{ name: 'wr', predicates: [state => state.canWrite, state => state.canRead] }],
     });
     const adminHOC = cerberusInstance.getHOCForRole('basic', 'wr');
-    const mockStore = mockedStore({ role: 'admin', canWrite: true, canRead: false });
+    const mockStore = mockedStore({ role: 'admin', canWrite: true, canRead: true });
     const ConfiguredDom = RouteSkeleton(mockStore, adminHOC);
     const wrapper = mount(<ConfiguredDom />);
     expect(wrapper.find('#noauth').length).toEqual(1);
