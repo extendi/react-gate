@@ -12,6 +12,8 @@ type AuthProps = {
   action?: ReduxAction,
   bindedPredicates: Array<PermissionPredicate>,
 };
+const AUTH_SUCCESSFUL = 'authSuccess';
+const AUTH_FAILED = 'authFailed';
 
 const defaultPredicate = [() => true];
 
@@ -32,32 +34,27 @@ const RouteLocker = (
   permissions: Array<PermissionPredicate> = [],
 ) => (Component: React.ComponentType<any>): React.ComponentType<any> => {
   window.console.log('Authconfig', authConfig);
-  window.console.log('Permissions', permissions);
+  // window.console.log('Permissions', permissions);
 
-  const decorated = class extends React.Component<AuthProps, any> {
-    static defaultProps = {
-      userObject: {},
+  const decorated = (props: AuthProps) => {
+    const { action } = props;
+    if (
+      (!onlyLogin && props.userRole === currentRole && Predicate.and(...props.bindedPredicates)()) ||
+        (props.userObject && onlyLogin)
+    ) {
+      if (action) action(AUTH_SUCCESSFUL);
+      window.console.log('Here', props.userRole, currentRole);
+      return <Component {...props} />;
     }
-    state = {};
-    componentDidMount() {
-      window.console.log('There are the props ', this.props);
-      if (this.props.action) {
-        this.props.action();
-      }
+    if (authConfig.Component404) {
+      if (action) action(AUTH_FAILED);
+      return <authConfig.Component404 />;
     }
-    render() {
-      if (
-        (!onlyLogin && this.props.userRole === currentRole && Predicate.and(...this.props.bindedPredicates)()) ||
-        (this.props.userObject && onlyLogin)
-      ) {
-        window.console.log('Here', this.props.userRole, currentRole)
-        return <Component {...this.props} />;
-      }
-      if (authConfig.Component404) {
-        return <authConfig.Component404 />;
-      }
-      return <Redirect to={authConfig.redirectPath} />;
-    }
+    if (action) action(AUTH_FAILED);
+    return <Redirect to={authConfig.redirectPath} />;
+  };
+  decorated.defaultProps = {
+    action: null,
   };
   return connect(mapStateToProps(authConfig, permissions), mapDispatchToProps(authConfig))(decorated);
 };

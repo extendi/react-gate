@@ -12,10 +12,11 @@ const mockedStore = configureStore();
 const normalCerberusConfig = {
   roles: ['admin', 'basic'],
   loginSelector: store => store.logged,
-  roleSelector: store => store.role && store.role === 'admin',
+  roleSelector: store => store.role,
   redirectPath: '/noauth',
 };
 
+const CustomAction = { type: 'CUSTOM_ACTION' };
 const ProtectedComponent = (props) => {
   console.log('diocane', props)
  return  <div id="protected">I am super protected!</div>
@@ -64,5 +65,13 @@ describe('RouteLocker component', () => {
     const ConfiguredDom = RouteSkeleton(mockedStore({ role: 'basic' }), adminHOC);
     const wrapper = mount(<ConfiguredDom />);
     expect(wrapper.find('#noauth').length).toEqual(1);
+  });
+
+  it('Should consent access to admin users', () => {
+    const cerberusInstance = new CerberusAuth(normalCerberusConfig);
+    const adminHOC = cerberusInstance.getHOCForRole('admin');
+    const ConfiguredDom = RouteSkeleton(mockedStore({ role: 'admin' }), adminHOC);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#protected').length).toEqual(1);
   });
 });
