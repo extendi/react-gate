@@ -33,7 +33,7 @@ const RouteLocker = (
 ) => (Component: React.ComponentType<any>): React.ComponentType<any> => {
   window.console.log('Authconfig', authConfig);
   window.console.log('Permissions', permissions);
-  
+
   const decorated = class extends React.Component<AuthProps, any> {
     static defaultProps = {
       userObject: {},
@@ -47,10 +47,10 @@ const RouteLocker = (
     }
     render() {
       if (
-        (!onlyLogin && this.props.userRole.indexOf(currentRole) !== -1 && Predicate.and(...this.props.bindedPredicates)()) ||
+        (!onlyLogin && this.props.userRole === currentRole && Predicate.and(...this.props.bindedPredicates)()) ||
         (this.props.userObject && onlyLogin)
       ) {
-        window.console.log('Here', this.props.userRole, currentRole);
+        window.console.log('Here', this.props.userRole, currentRole)
         return <Component {...this.props} />;
       }
       if (authConfig.Component404) {
