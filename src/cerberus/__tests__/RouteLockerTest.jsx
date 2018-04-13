@@ -21,7 +21,9 @@ const ProtectedComponent = (props) => {
   console.log('diocane', props);
   return <div id="protected">I am super protected!</div>;
 };
-
+const NotFoundComponent = () => (
+  <div id="notfound">Nun c sta nient u zì!</div>
+);
 const NoAuthComponent = () => (
   <div id="noauth">Wagliò aro vaj?!</div>
 );
@@ -43,6 +45,25 @@ beforeAll(() => {
 });
 
 describe('RouteLocker component', () => {
+  it('Should block access to non logged users and show 404 component and dispatch redux action with appropriate result', () => {
+    const cerberusInstance = new CerberusAuth({ ...normalCerberusConfig, Component404: NotFoundComponent, reduxAction: CustomAction });
+    const loggedHoc = cerberusInstance.getHOCForLogin();
+    const store = mockedStore({ logged: false });
+    const ConfiguredDom = RouteSkeleton(store, loggedHoc);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#notfound').length).toEqual(1);
+    const actionsFired = store.getActions();
+    expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authFailed' }]);
+  });
+
+  it('Should block access to non logged users and show 404 component', () => {
+    const cerberusInstance = new CerberusAuth({ ...normalCerberusConfig, Component404: NotFoundComponent });
+    const loggedHoc = cerberusInstance.getHOCForLogin();
+    const ConfiguredDom = RouteSkeleton(mockedStore({ logged: false }), loggedHoc);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#notfound').length).toEqual(1);
+  });
+
   it('Should block access to non logged users', () => {
     const cerberusInstance = new CerberusAuth(normalCerberusConfig);
     const loggedHoc = cerberusInstance.getHOCForLogin();

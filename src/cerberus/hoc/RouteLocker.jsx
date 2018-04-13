@@ -29,7 +29,7 @@ const mapDispatchToProps = ({ reduxAction }) => dispatch => ({
 
 const RouteLocker = (
   authConfig: AuthConfig,
-  onlyLogin: boolean = false,
+  onlyLogin: boolean = true,
   currentRole: string = '',
   permissions: Array<PermissionPredicate> = [],
 ) => (Component: React.ComponentType<any>): React.ComponentType<any> => {

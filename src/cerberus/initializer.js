@@ -32,7 +32,7 @@ class CerberusAuth {
     if (!this.configuration.loginSelector) {
       invariant(this.configuration.loginSelector, 'You selected an invalid loginSelector');
     }
-    return RouteLocker(this.configuration, true);
+    return RouteLocker(this.configuration);
   }
 }
 
