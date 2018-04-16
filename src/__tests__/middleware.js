@@ -51,4 +51,42 @@ describe('Redux middleware', () => {
     const actions = store.getActions();
     expect(actions).toEqual([expectedActionResult]);
   });
+
+  it('Should call update action because userRole updated', () => {
+    const expectedActionResult = {
+      type: UPDATE_AUTH_INFO,
+      userObject: 253,
+      userRole: 'basic',
+    };
+    const store = mockedStore({
+      role: 'basic',
+      isLogged: 253,
+      authProvider: {
+        userObject: 253,
+        userRole: 'admin',
+      },
+    });
+    const middleware = createMiddleware(defaultConfig);
+    const { next, action } = mockFuncs();
+    middleware(store)(next)(action);
+    const actions = store.getActions();
+    expect(actions).toEqual([expectedActionResult]);
+  });
+
+  it('Should not call update action because nothing updated', () => {
+    const store = mockedStore({
+      role: 'basic',
+      isLogged: 253,
+      authProvider: {
+        userObject: 253,
+        userRole: 'basic',
+      },
+    });
+    const middleware = createMiddleware(defaultConfig);
+    const { next, action } = mockFuncs();
+    middleware(store)(next)(action);
+    const actions = store.getActions();
+    expect(actions).toEqual([]);
+  });
+
 });
