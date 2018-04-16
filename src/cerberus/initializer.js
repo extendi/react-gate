@@ -1,7 +1,11 @@
 // @flow
+import * as React from 'react';
 import invariant from 'invariant';
 import type { AuthConfig, Roles, WrapperFunction, PermissionPredicate, Permissions } from './types';
 import RouteLocker from './hoc/RouteLocker';
+import ProviderConfigurator from './components/Provider';
+
+export const { Provider, Consumer } = React.createContext({});
 
 class CerberusAuth {
   configuration: AuthConfig;
@@ -11,6 +15,14 @@ class CerberusAuth {
     this.configuration = configuration;
     this.roles = configuration.roles;
     this.userPermissions = configuration.permissions || [];
+  }
+
+  getConfig(): AuthConfig {
+    return this.configuration;
+  }
+
+  getProvider(): React.ComponentType<any> {
+    return ProviderConfigurator(this.configuration, this.userPermissions);
   }
 
   getHOCForRole(role: string, permission?: string): WrapperFunction {
