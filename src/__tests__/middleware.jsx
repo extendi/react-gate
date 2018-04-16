@@ -1,8 +1,13 @@
+import React from 'react';
 import configureStore from 'redux-mock-store';
 import createMiddleware from '../cerberus/redux/middleware';
-import { UPDATE_AUTH_INFO } from '../cerberus/redux/actions';
+import { UPDATE_AUTH_INFO, INITIALIZE_AUTH_INTERNALS } from '../cerberus/redux/actions';
 
 const mockedStore = configureStore();
+
+const NotFoundComponent = () => (
+  <div id="notfound">NOT FOUND</div>
+);
 
 const defaultConfig = {
   roleSelector: state => state.role,
@@ -16,6 +21,63 @@ const mockFuncs = () => ({
   action: jest.fn(),
 });
 describe('Redux middleware', () => {
+  it(' Should not initialize the configuration of library', () => {
+    const loginSelector = state => state.isLogged;
+    const roleSelector = state => state.role;
+    const authConfig = {
+      roles: ['admin', 'basic'],
+      redirectPath: '/login',
+      roleSelector,
+      loginSelector,
+      Component404: NotFoundComponent,
+    };
+    const store = mockedStore({
+      role: 'admin',
+      isLogged: 252,
+      authProvider: {
+        userObject: 252,
+        userRole: 'admin',
+        internals: {},
+      },
+    });
+    const middleware = createMiddleware(authConfig);
+    const { next, action } = mockFuncs();
+    middleware(store)(next)(action);
+    const actions = store.getActions();
+    expect(actions).toEqual([]);
+  });
+  it(' Should initialize the configuration of library', () => {
+    const loginSelector = state => state.isLogged;
+    const roleSelector = state => state.role;
+    const authConfig = {
+      roles: ['admin', 'basic'],
+      redirectPath: '/login',
+      roleSelector,
+      loginSelector,
+      Component404: NotFoundComponent,
+    };
+    const expectedActionResult = {
+      type: INITIALIZE_AUTH_INTERNALS,
+      internals: {
+        roles: ['admin', 'basic'],
+        redirectPath: '/login',
+        Component404: NotFoundComponent,
+      },
+    };
+    const store = mockedStore({
+      role: 'admin',
+      isLogged: 252,
+      authProvider: {
+        userObject: 252,
+        userRole: 'admin',
+      },
+    });
+    const middleware = createMiddleware(authConfig);
+    const { next, action } = mockFuncs();
+    middleware(store)(next)(action);
+    const actions = store.getActions();
+    expect(actions).toEqual([expectedActionResult]);
+  });
   it('Should call next at the end of the chain with an action', () => {
     const store = mockedStore({
       role: 'admin',
@@ -23,6 +85,7 @@ describe('Redux middleware', () => {
       authProvider: {
         userObject: 252,
         userRole: 'admin',
+        internals: {},
       },
     });
     const middleware = createMiddleware(defaultConfig);
@@ -42,6 +105,7 @@ describe('Redux middleware', () => {
       isLogged: 252,
       authProvider: {
         userObject: 253,
+        internals: {},
         userRole: 'admin',
       },
     });
@@ -64,6 +128,7 @@ describe('Redux middleware', () => {
       authProvider: {
         userObject: 253,
         userRole: 'admin',
+        internals: {},
       },
     });
     const middleware = createMiddleware(defaultConfig);
@@ -80,6 +145,7 @@ describe('Redux middleware', () => {
       authProvider: {
         userObject: 253,
         userRole: 'basic',
+        internals: {},
       },
     });
     const middleware = createMiddleware(defaultConfig);
@@ -88,5 +154,4 @@ describe('Redux middleware', () => {
     const actions = store.getActions();
     expect(actions).toEqual([]);
   });
-
 });

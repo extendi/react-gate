@@ -1,4 +1,4 @@
-import { UPDATE_AUTH_INFO } from './actions';
+import { UPDATE_AUTH_INFO, INITIALIZE_AUTH_INTERNALS } from './actions';
 
 const initialState = {};
 
@@ -10,6 +10,11 @@ export default function authenticationReducer(state = initialState, action) {
         ...state,
         userObject: action.userObject,
         userRole: action.userRole,
+      };
+    case INITIALIZE_AUTH_INTERNALS:
+      return {
+        ...state,
+        internals: action.internals,
       };
     default:
       return state;
