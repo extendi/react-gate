@@ -1,9 +1,9 @@
 export const UPDATE_AUTH_INFO = '@@authManager/UPDATE_AUTH_INFO';
 
-const updateInfo = ({ userObject, userRole }) => ({
+const updateInfo = ({ loginSelector, roleSelector }) => ({
   type: UPDATE_AUTH_INFO,
-  userObject,
-  userRole,
+  userObject: loginSelector,
+  userRole: roleSelector,
 });
 
 export default updateInfo;
