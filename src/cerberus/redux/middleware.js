@@ -1,4 +1,3 @@
-// @flow
 import AuthUpdateAction from './actions';
 
 const createMiddleware = ({ loginSelector, roleSelector }) => store => next => (action) => {
@@ -18,3 +17,5 @@ const createMiddleware = ({ loginSelector, roleSelector }) => store => next => (
   }
   next(action);
 };
+
+export default createMiddleware;
