@@ -94,6 +94,27 @@ describe('Redux middleware', () => {
     expect(next).toHaveBeenCalledWith(defaultAction);
   });
 
+  it('Should assign default roleSelector when no one is provided', () => {
+    const expectedActionResult = {
+      type: UPDATE_AUTH_INFO,
+      userObject: 252,
+    };
+    const store = mockedStore({
+      role: 'admin',
+      isLogged: 252,
+      authProvider: {
+        userObject: 253,
+        internals: {},
+        userRole: 'admin',
+      },
+    });
+    const middleware = createMiddleware({ ...defaultConfig, roleSelector: undefined });
+    const { next, action } = mockFuncs();
+    middleware(store)(next)(action);
+    const actions = store.getActions();
+    expect(actions).toEqual([expectedActionResult]);
+  });
+
   it('Should call update action because userObject updated', () => {
     const expectedActionResult = {
       type: UPDATE_AUTH_INFO,

@@ -1,6 +1,12 @@
-import { updateInfo, setupInternals, INITIALIZE_AUTH_INTERNALS } from './actions';
+import { updateInfo, setupInternals } from './actions';
 
-const createMiddleware = ({ loginSelector, roleSelector, ...rest }) => store => next => (action) => {
+const defaultRoleSelector = () => undefined; // For the sake of clarity
+
+const createMiddleware = ({
+  loginSelector,
+  roleSelector = defaultRoleSelector,
+  ...rest
+}) => store => next => (action) => {
   // First get current store
   const actualState = store.getState();
   // Check if the config is in the state
