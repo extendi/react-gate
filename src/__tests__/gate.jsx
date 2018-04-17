@@ -61,13 +61,15 @@ describe('RouteLocker component', () => {
       },
     });
     const authJSX = (
-      <Gate role="basic">
-        <Route exact path="/test" component={ProtectedComponent} />
-      </Gate>
+      <Route
+        exact
+        path="/test"
+        render={props => (<Gate role="basic"><ProtectedComponent {...props} /></Gate>)}
+      />
     );
     const ConfiguredDom = RouteSkeleton(store, authJSX);
     const wrapper = mount(<ConfiguredDom />);
-     // expect(wrapper.find('#notfound').length).toEqual(1);
+    // expect(wrapper.find('#notfound').length).toEqual(1);
     // const actionsFired = store.getActions();
     // expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authFailed' }]);
   });
