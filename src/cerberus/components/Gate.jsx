@@ -24,8 +24,6 @@ type GateProps = {
 const AUTH_SUCCESSFUL = 'authSuccess';
 const AUTH_FAILED = 'authFailed';
 
-const defaultPredicate = [() => true];
-
 const mapStateToProps = ({ authProvider, authProvider: { internals: { permissions } }, ...state }) => ({
   userObject: authProvider.userObject,
   userRole: authProvider.userRole,

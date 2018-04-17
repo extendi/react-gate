@@ -1,6 +1,6 @@
 import { UPDATE_AUTH_INFO, INITIALIZE_AUTH_INTERNALS } from './actions';
 
-const initialState = {};
+const initialState = { lol: 'asd'}; //  todo add initial state internals from config
 
 // Using switch in order to suggest to support more actions in the future.
 export default function authenticationReducer(state = initialState, action) {
