@@ -34,81 +34,96 @@ const mapStateToProps = ({ authProvider, authProvider: { internals: { permission
   permissions: permissions && permissions.map(p => ({ name: p.name, predicates: p.predicates.map(f => closurize(state, f)) })),
 });
 
-const mapDispatchToProps = (dispatch, { authConfig: { reduxAction } }) => ({
-  action: reduxAction ? result => dispatch(reduxAction(result)) : undefined,
+const mapDispatchToProps = dispatch => ({
+  action: (reduxAction, result) => dispatch(reduxAction(result)),
 });
 
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const { reduxAction } = stateProps.authConfig;
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    action: reduxAction ? result => dispatchProps.action(reduxAction, result) : undefined,
+  };
+};
+
 class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
-    static propTypes = {
-      permissions: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        predicates: PropTypes.arrayOf(PropTypes.func),
-      })),
-      userRole: PropTypes.string,
-      /* eslint-disable react/forbid-prop-types */
-      userObject: PropTypes.any,
-      availableRoles: PropTypes.arrayOf(PropTypes.string),
-      onlyLogin: PropTypes.bool,
-      role: PropTypes.string,
-      children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node,
-      ]).isRequired,
-    }
+  constructor(props) {
+    super(props);
 
-    static defaultProps = {
-      permissions: [],
-      userRole: undefined,
-      userObject: undefined,
-      availableRoles: [],
-      onlyLogin: undefined,
-      role: undefined,
-    };
+    console.log(this.props);
+    invariant(
+      this.props.onlyLogin || this.props.role,
+      'You must specify one of onlyLogin or role props!',
+    );
+    invariant(
+      !(this.props.onlyLogin === undefined && this.props.availableRoles.indexOf(this.props.role) === -1)
+      , 'Invalid role selected',
+    );
 
-    state = {
-      permissions: [defaultPredicate],
-    };
-
-    componentDidMount() {
-      invariant(
-        !(!this.props.onlyLogin && !this.props.role),
-        'You must specify one of onlyLogin or role props!',
-      );
-      invariant(
-        this.props.availableRoles.indexOf(this.props.role) !== -1,
-        'You have selected an invalid role!',
-      );
-      // Permission retrieving
-      const permissions = this.props.permissions
+    this.state = {
+      permissions: this.props.permissions
         .filter(p => this.props.selectedPermissions.indexOf(p.name) !== -1)
-        .reduce((x, y) => x.concat(y), []);
-      this.setState({ permissions });
-    }
+        .reduce((x, y) => x.concat(y), []),
+    };
+  }
 
-    render() {
-      const {
-        action,
-        authConfig,
-        role,
-        onlyLogin,
-        userRole,
-        userObject,
-      } = this.props;
-      if (
-        (!onlyLogin && userRole === role && Predicate.and(...this.state.permissions)()) ||
+  shouldComponentUpdate(nextProps) {
+    return this.props.userRole !== nextProps.userRole && this.props.userObject !== nextProps.userObject;
+  }
+  render() {
+    const {
+      action,
+      authConfig,
+      role,
+      onlyLogin,
+      userRole,
+      userObject,
+    } = this.props;
+    if (
+      (!onlyLogin && userRole === role && Predicate.and(...this.state.permissions)()) ||
             (userObject && onlyLogin)
-      ) {
-        if (action) action(AUTH_SUCCESSFUL);
-        window.console.log('Here', userRole, role);
-        return this.props.children;
-      }
-      if (authConfig.Component404) {
-        if (action) action(AUTH_FAILED);
-        return <authConfig.Component404 />;
-      }
-      if (action) action(AUTH_FAILED);
-      return <Redirect to={authConfig.redirectPath} />;
+    ) {
+      if (action) action(AUTH_SUCCESSFUL);
+      window.console.log('Here', userRole, role);
+      return this.props.children;
     }
+    if (authConfig.Component404) {
+      if (action) action(AUTH_FAILED);
+      console.log('Here');
+      return <authConfig.Component404 />;
+    }
+    if (action) action(AUTH_FAILED);
+    console.log('Here');
+    return <Redirect to={authConfig.redirectPath} />;
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Gate);
+Gate.propTypes = {
+  permissions: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    predicates: PropTypes.arrayOf(PropTypes.func),
+  })),
+  userRole: PropTypes.string,
+  /* eslint-disable react/forbid-prop-types */
+  userObject: PropTypes.any,
+  availableRoles: PropTypes.arrayOf(PropTypes.string),
+  onlyLogin: PropTypes.bool,
+  role: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
+
+Gate.defaultProps = {
+  permissions: [],
+  userRole: undefined,
+  userObject: undefined,
+  availableRoles: [],
+  onlyLogin: undefined,
+  role: undefined,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Gate);

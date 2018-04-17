@@ -2,7 +2,7 @@ Arguments:
   /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js test
 
 PATH: 
-  /Users/cdimonaco/.rvm/gems/ruby-2.4.1/bin:/Users/cdimonaco/.rvm/gems/ruby-2.4.1@global/bin:/Users/cdimonaco/.rvm/rubies/ruby-2.4.1/bin:/Users/cdimonaco/.zplug/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/cdimonaco/.fzf/bin:/Users/cdimonaco/.rvm/bin
+  /Users/cdimonaco/.rvm/gems/ruby-2.4.1/bin:/Users/cdimonaco/.rvm/gems/ruby-2.4.1@global/bin:/Users/cdimonaco/.rvm/rubies/ruby-2.4.1/bin:/Users/cdimonaco/.zplug/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/cdimonaco/.rvm/bin:/Users/cdimonaco/.fzf/bin
 
 Yarn version: 
   1.5.1
