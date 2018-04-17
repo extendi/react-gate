@@ -1,50 +1,30 @@
 // @flow
-import * as React from 'react';
 import invariant from 'invariant';
 import type { AuthConfig, Roles, WrapperFunction, PermissionPredicate, Permissions } from './types';
-import RouteLocker from './hoc/RouteLocker';
-import ProviderConfigurator from './components/Provider';
+import createMiddleware from './redux/middleware';
+import authReducer from './redux/reducer';
 
-export const { Provider, Consumer } = React.createContext({});
 
 class CerberusAuth {
   configuration: AuthConfig;
   roles: Roles;
   userPermissions: Array<Permissions>;
   constructor(configuration: AuthConfig) {
+    invariant(
+      configuration.loginSelector,
+      'You need to specify a loginSelector in order to use the library.',
+    );
+    invariant(
+      configuration.redirectPath || configuration.Component404,
+      'You need to specify a redirect path or a 404 component.',
+    );
     this.configuration = configuration;
-    this.roles = configuration.roles;
-    this.userPermissions = configuration.permissions || [];
   }
-
-  getConfig(): AuthConfig {
-    return this.configuration;
-  }
-
-  getProvider(): React.ComponentType<any> {
-    return ProviderConfigurator(this.configuration, this.userPermissions);
-  }
-
-  getHOCForRole(role: string, permission?: string): WrapperFunction {
-    let userPermissions: Array<PermissionPredicate> = [];
-    if (this.roles.indexOf(role) === -1) {
-      invariant(!this.roles.indexOf(role) === -1, 'You selected an invalid role!');
-    }
-    if (permission) {
-      const permissionFound = this.userPermissions.filter(p => p.name === permission);
-      if (permissionFound.length !== 1) {
-        invariant(!(permissionFound.length !== 1), 'The selected permission is not valid!');
-      }
-      userPermissions = permissionFound[0].predicates;
-    }
-    return RouteLocker(this.configuration, false, role, userPermissions);
-  }
-
-  getHOCForLogin(): WrapperFunction {
-    if (!this.configuration.loginSelector) {
-      invariant(this.configuration.loginSelector, 'You selected an invalid loginSelector');
-    }
-    return RouteLocker(this.configuration);
+  reduxConfig() {
+    return {
+      authReducer,
+      middleware: createMiddleware(this.configuration),
+    };
   }
 }
 
