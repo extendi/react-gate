@@ -65,6 +65,7 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
     this.state = {
       permissions: this.props.permissions
         .filter(p => this.props.selectedPermissions.indexOf(p.name) !== -1)
+        .map(p => p.predicates)
         .reduce((x, y) => x.concat(y), []),
     };
   }
@@ -120,6 +121,7 @@ Gate.defaultProps = {
   userRole: undefined,
   userObject: undefined,
   availableRoles: [],
+  selectedPermissions: [],
   onlyLogin: undefined,
   role: undefined,
 };

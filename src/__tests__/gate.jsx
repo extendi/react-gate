@@ -48,14 +48,20 @@ describe('RouteLocker component', () => {
   it('Should throw an error because no role or login is provided to gate component', () => {
     const store = mockedStore({
       role: 'admin',
+      canWrite: true,
       isLogged: 252,
       authProvider: {
         userObject: 252,
-        userRole: 'admin',
+        userRole: 'basic',
         internals: {
           roles: ['basic'],
           reduxAction: CustomAction,
-          permissions: [],
+          permissions: [
+              { 
+                  name: 'canWrite',
+                  predicates: [state => state.canWrite],
+              }
+            ],
           redirectPath: '/noauth',
         },
       },
@@ -64,7 +70,7 @@ describe('RouteLocker component', () => {
       <Route
         exact
         path="/test"
-        render={props => (<Gate role="basic"><ProtectedComponent {...props} /></Gate>)}
+        render={props => (<Gate selectedPermissions={['canWrite']} role="basic"><ProtectedComponent {...props} /></Gate>)}
       />
     );
     const ConfiguredDom = RouteSkeleton(store, authJSX);
