@@ -7,7 +7,6 @@ import EnzymeAdapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Gate from '../cerberus/components/Gate';
 import Initializer from '../cerberus/initializer';
-
 import {
   NotFoundComponent,
   NoAuthComponent,
@@ -15,6 +14,10 @@ import {
   defaultLoggedSelector,
   ProtectedComponent,
   defaultAction,
+  mockReducer,
+  mockActionLogin,
+  mockActionRemove,
+  mockActionUpdate,
 } from './common';
 
 const defaultConfig = {
@@ -34,11 +37,15 @@ const defaultConfig = {
     },
   ],
   reduxAction: defaultAction,
+  loginActionType: 'LOGIN_USER',
 };
 
 /* eslint-disable max-len */
 const mockedStore = configureStore();
-const configRealStore = (reducer, middlewares) => createStore(combineReducers({ authProvider: reducer }), applyMiddleware(...middlewares));
+const configRealStore = (reducer, middlewares) => createStore(
+  combineReducers({ authProvider: reducer, user: mockReducer }),
+  applyMiddleware(...middlewares),
+);
 const CustomAction = result => ({ type: 'CUSTOM_ACTION', auth: result });
 
 const RouteSkeleton = (store, configuredAuth) => () => (
@@ -56,7 +63,7 @@ beforeAll(() => {
   Enzyme.configure({ adapter: new EnzymeAdapter() });
 });
 
-describe('RouteLocker component', () => {
+describe('Gate component', () => {
   it('Should throw an error because no role or login is provided to gate component', () => {
     const { authReducer, middleware } = new Initializer(defaultConfig).reduxConfig();
     const store = configRealStore(authReducer, [middleware]);
@@ -97,9 +104,11 @@ describe('RouteLocker component', () => {
     const ConfiguredDom = RouteSkeleton(store, authJSX);
     const wrapper = mount(<ConfiguredDom />);
     // expect(wrapper.find('#notfound').length).toEqual(1);
-    // store.dispatch({type: 'TEST'})
-    const actionsFired = store.getState();
-    console.log(actionsFired.authProvider);
-    //expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
+    //store.subscribe(() => console.log(store.getState()))
+    store.dispatch({type: 'TEST'});
+    store.dispatch(mockActionLogin());
+    store.dispatch(mockActionUpdate());
+
+    // expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
   });
 });

@@ -25,4 +25,5 @@ export type AuthConfig = {
   reduxAction?: ReduxAction,
   redirectPath?: RedirectPath,
   Component404?: NotFoundComponent,
+  loginActionType: string,
 };

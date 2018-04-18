@@ -7,9 +7,8 @@ export const updateInfo = ({ loginSelector, roleSelector }) => ({
   userRole: roleSelector,
 });
 
-export const setupInternals = authConfig => ({
+export const setupInternals = () => ({
   type: INITIALIZE_AUTH_INTERNALS,
-  internals: authConfig,
 });
 
 export default updateInfo;
