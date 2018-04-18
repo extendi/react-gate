@@ -34,12 +34,14 @@ const mapStateToProps = ({
     roles,
     permissions,
     reduxAction,
+    Component404,
+    redirectPath,
   }, ...state
 }) => ({
   authInfo: {
     userObject: loginSelector(state),
     userRole: roleSelector(state),
-    authConfig: state.authProvider,
+    authConfig: { Component404, redirectPath },
     availableRoles: roles,
     reduxAction,
     permissions: permissions && permissions.map(p => ({ name: p.name, predicates: p.predicates.map(f => closurize(state, f)) })),
@@ -50,21 +52,9 @@ const mapDispatchToProps = dispatch => ({
   action: (reduxAction, result) => dispatch(reduxAction(result)),
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { reduxAction } = stateProps.authConfig;
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    action: reduxAction ? result => dispatchProps.action(reduxAction, result) : undefined,
-  };
-};
-
 class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
   constructor(props) {
     super(props);
-
-    console.log(this.props.authInfo);
     invariant(
       this.props.onlyLogin || this.props.role,
       'You must specify one of onlyLogin or role props!',
@@ -97,19 +87,18 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
       onlyLogin,
       action,
     } = this.props;
-
     if (
       (!onlyLogin && userRole === role && Predicate.and(...this.state.permissions)()) ||
             (userObject && onlyLogin)
     ) {
       if (reduxAction) action(reduxAction, AUTH_SUCCESSFUL);
-      window.console.log('Here', userRole, role);
       return this.props.children;
     }
     if (authConfig.Component404) {
       if (reduxAction) action(reduxAction, AUTH_FAILED);
       return <authConfig.Component404 />;
     }
+    console.log('Redirected', userObject);
     if (reduxAction) action(reduxAction, AUTH_FAILED);
     return <Redirect to={authConfig.redirectPath} />;
   }

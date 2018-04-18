@@ -1,10 +1,10 @@
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import Enzyme, { mount } from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
-import configureStore from 'redux-mock-store';
+import { setupInternals } from '../cerberus/redux/actions';
 import Gate from '../cerberus/components/Gate';
 import Initializer from '../cerberus/initializer';
 import {
@@ -18,7 +18,12 @@ import {
   mockActionLogin,
   mockActionRemove,
   mockActionUpdate,
+  errorBoundary,
+  mockActionNewSelector,
+  bindLocationChanger,
 } from './common';
+
+const LocationChanger = bindLocationChanger();
 
 const defaultConfig = {
   roles: ['admin', 'basic'],
@@ -40,10 +45,9 @@ const defaultConfig = {
 };
 
 /* eslint-disable max-len */
-const mockedStore = configureStore();
-const configRealStore = (reducer, middlewares) => createStore(
+const configRealStore = reducer => createStore(
   combineReducers({ authProvider: reducer, user: mockReducer }),
-  applyMiddleware(...middlewares),
+  { user: { isLogged: true, role: 'basic' } },
 );
 const CustomAction = result => ({ type: 'CUSTOM_ACTION', auth: result });
 
@@ -51,7 +55,8 @@ const RouteSkeleton = (store, configuredAuth) => () => (
   <Provider store={store}>
     <MemoryRouter initialEntries={['/test']}>
       <Switch>
-        <Route exact path="/noauth" component={NoAuthComponent} />
+        {configuredAuth}
+        <Route exact path="/noauth" render={props => (<LocationChanger><NoAuthComponent {...props} /></LocationChanger>)} />
       </Switch>
     </MemoryRouter>
   </Provider>
@@ -63,51 +68,102 @@ beforeAll(() => {
 });
 
 describe('Gate component', () => {
-  it('Should throw an error because no role or login is provided to gate component', () => {
-    const { authReducer, middleware } = new Initializer(defaultConfig).reduxConfig();
-    const store = configRealStore(authReducer, [middleware]);
-    /*
-    const store = mockedStore({
-      role: 'admin',
-      canWrite: true,
-      canRead: true,
-      isLogged: 252,
-      authProvider: {
-        userObject: 252,
-        userRole: 'basic',
-        internals: {
-          // roles: ['basic'],
-          reduxAction: CustomAction,
-          /*
-          permissions: [
-              {
-                  name: 'canWrite',
-                  predicates: [state => state.canWrite],
-              },
-              {
-                name: 'canRead',
-                predicates: [state => state.canRead],
-            }
-            ],
-          redirectPath: '/noauth',
-        },
-      },
-    }); */
+  it('Should first login, than when user object change, fail at login and go to redirectpath', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
+    const store = configRealStore(authReducer);
     const authJSX = (
       <Route
         exact
         path="/test"
-        render={props => (<Gate onlyLogin><ProtectedComponent {...props} /></Gate>)}
+        render={props => (
+          <Gate onlyLogin>
+            <LocationChanger>
+              <ProtectedComponent {...props} />
+            </LocationChanger>
+          </Gate>
+        )}
       />
     );
     const ConfiguredDom = RouteSkeleton(store, authJSX);
     const wrapper = mount(<ConfiguredDom />);
-    // expect(wrapper.find('#notfound').length).toEqual(1);
-    //store.subscribe(() => console.log(store.getState()))
-    //store.dispatch({type: 'TEST'});
-    //store.dispatch(mockActionLogin());
-    //store.dispatch(mockActionUpdate());
-    console.log(store.getState());
-    // expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
+    const noauthRouting = wrapper.find('#routenoauth');
+    const authRouting = wrapper.find('#routeprotected');
+    expect(noauthRouting.length).toEqual(1);
+    expect(authRouting.length).toEqual(1);
+    expect(wrapper.find('#protected').length).toEqual(1);
+    noauthRouting.simulate('click');
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    store.dispatch(mockActionRemove());
+    authRouting.simulate('click');
+    expect(wrapper.find('#noauth').length).toEqual(1);
+  });
+  it('Should first not login, than when user object change, success at login and go to protected path', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
+    const store = configRealStore(authReducer);
+    const ErrorHandler = errorBoundary();
+    const authJSX = (
+      <Route
+        exact
+        path="/test"
+        render={props => (
+          <ErrorHandler>
+            <Gate onlyLogin>
+              <LocationChanger>
+                <ProtectedComponent {...props} />
+              </LocationChanger>
+            </Gate>
+          </ErrorHandler>
+        )}
+      />
+    );
+    const ConfiguredDom = RouteSkeleton(store, authJSX);
+    store.dispatch(mockActionRemove());
+    const wrapper = mount(<ConfiguredDom />);
+    const noauthRouting = wrapper.find('#routenoauth');
+    const authRouting = wrapper.find('#routeprotected');
+    expect(noauthRouting.length).toEqual(1);
+    expect(authRouting.length).toEqual(1);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    store.dispatch(mockActionLogin());
+    authRouting.simulate('click');
+    expect(wrapper.find('#protected').length).toEqual(1);
+  });
+
+  it('Should first not login, because role is not present, than login when roles changed in the configuration', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
+    const store = configRealStore(authReducer);
+    const ErrorHandler = errorBoundary();
+    jest.spyOn(console, 'error')
+  global.console.error.mockImplementation(() => {})
+    const authJSX = (
+      <Route
+        exact
+        path="/test"
+        render={props => (
+          <ErrorHandler>
+            <Gate role="user" >
+              <LocationChanger>
+                <ProtectedComponent {...props} />
+              </LocationChanger>
+            </Gate>
+          </ErrorHandler>
+        )}
+      />
+    );
+    const ConfiguredDom = RouteSkeleton(store, authJSX);
+    store.dispatch(mockActionRemove());
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper).toThrowError();
+    const noauthRouting = wrapper.find('#routenoauth');
+    const authRouting = wrapper.find('#routeprotected');
+    expect(noauthRouting.length).toEqual(1);
+    expect(authRouting.length).toEqual(1);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    /*
+    store.dispatch(mockActionNewSelector());
+    store.dispatch(setupInternals({ loginSelector: state => state.newSelector }));
+    console.log(store.getState().authProvider.loginSelector.toString());
+    authRouting.simulate('click');
+    expect(wrapper.find('#protected').length).toEqual(1); */
   });
 });
