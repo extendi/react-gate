@@ -11,10 +11,6 @@ class CerberusAuth {
   userPermissions: Array<Permissions>;
   constructor(configuration: AuthConfig) {
     invariant(
-      configuration.loginActionType,
-      'You need to specify your login action type',
-    );
-    invariant(
       configuration.loginSelector,
       'You need to specify a loginSelector in order to use the library.',
     );

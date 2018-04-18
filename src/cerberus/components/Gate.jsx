@@ -9,27 +9,41 @@ import type { AuthConfig, Permissions } from '../types';
 import closurize from '../utils/closurize';
 
 type GateProps = {
-    onlyLogin?: boolean,
-    role?: string,
-    children: React.Node,
-    selectedPermissions: Array<string>,
+  authInfo: {
     permissions: Array<Permissions>,
     userObject: any,
     userRole: string,
     authConfig: AuthConfig,
     availableRoles: Array<string>,
-    action?: (authState: string) => {},
+    reduxAction?: () => {},
+  },
+  children: React.Node,
+  onlyLogin?: boolean,
+  action: (reduxAction: any, result: string) => {},
+  role?: string,
+  selectedPermissions: Array<string>,
 };
 
 const AUTH_SUCCESSFUL = 'authSuccess';
 const AUTH_FAILED = 'authFailed';
 
-const mapStateToProps = ({ authProvider, authProvider: { internals: { permissions } }, ...state }) => ({
-  userObject: authProvider.userObject,
-  userRole: authProvider.userRole,
-  authConfig: authProvider.internals,
-  availableRoles: authProvider.internals.roles,
-  permissions: permissions && permissions.map(p => ({ name: p.name, predicates: p.predicates.map(f => closurize(state, f)) })),
+const mapStateToProps = ({
+  authProvider: {
+    roleSelector,
+    loginSelector,
+    roles,
+    permissions,
+    reduxAction,
+  }, ...state
+}) => ({
+  authInfo: {
+    userObject: loginSelector(state),
+    userRole: roleSelector(state),
+    authConfig: state.authProvider,
+    availableRoles: roles,
+    reduxAction,
+    permissions: permissions && permissions.map(p => ({ name: p.name, predicates: p.predicates.map(f => closurize(state, f)) })),
+  },
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -50,18 +64,18 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
   constructor(props) {
     super(props);
 
-    console.log(this.props);
+    console.log(this.props.authInfo);
     invariant(
       this.props.onlyLogin || this.props.role,
       'You must specify one of onlyLogin or role props!',
     );
     invariant(
-      !(this.props.onlyLogin === undefined && this.props.availableRoles.indexOf(this.props.role) === -1)
+      !(this.props.onlyLogin === undefined && this.props.authInfo.availableRoles.indexOf(this.props.role) === -1)
       , 'Invalid role selected',
     );
 
     this.state = {
-      permissions: this.props.permissions
+      permissions: this.props.authInfo.permissions
         .filter(p => this.props.selectedPermissions.indexOf(p.name) !== -1)
         .map(p => p.predicates)
         .reduce((x, y) => x.concat(y), []),
@@ -69,43 +83,51 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.userRole !== nextProps.userRole && this.props.userObject !== nextProps.userObject;
+    return this.props.authInfo !== nextProps.authInfo;
   }
   render() {
     const {
-      action,
-      authConfig,
+      authInfo: {
+        reduxAction,
+        authConfig,
+        userRole,
+        userObject,
+      },
       role,
       onlyLogin,
-      userRole,
-      userObject,
+      action,
     } = this.props;
+
     if (
       (!onlyLogin && userRole === role && Predicate.and(...this.state.permissions)()) ||
             (userObject && onlyLogin)
     ) {
-      if (action) action(AUTH_SUCCESSFUL);
+      if (reduxAction) action(reduxAction, AUTH_SUCCESSFUL);
       window.console.log('Here', userRole, role);
       return this.props.children;
     }
     if (authConfig.Component404) {
-      if (action) action(AUTH_FAILED);
+      if (reduxAction) action(reduxAction, AUTH_FAILED);
       return <authConfig.Component404 />;
     }
-    if (action) action(AUTH_FAILED);
+    if (reduxAction) action(reduxAction, AUTH_FAILED);
     return <Redirect to={authConfig.redirectPath} />;
   }
 }
 
 Gate.propTypes = {
-  permissions: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    predicates: PropTypes.arrayOf(PropTypes.func),
-  })),
-  userRole: PropTypes.string,
-  /* eslint-disable react/forbid-prop-types */
-  userObject: PropTypes.any,
-  availableRoles: PropTypes.arrayOf(PropTypes.string),
+  authInfo: PropTypes.shape({
+    permissions: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      predicates: PropTypes.arrayOf(PropTypes.func),
+    })),
+    userRole: PropTypes.string,
+    /* eslint-disable react/forbid-prop-types */
+    userObject: PropTypes.any,
+    availableRoles: PropTypes.arrayOf(PropTypes.string),
+    reduxAction: PropTypes.func,
+  }),
+  selectedPermissions: PropTypes.arrayOf(PropTypes.string),
   onlyLogin: PropTypes.bool,
   role: PropTypes.string,
   children: PropTypes.oneOfType([
@@ -115,13 +137,15 @@ Gate.propTypes = {
 };
 
 Gate.defaultProps = {
-  permissions: [],
-  userRole: undefined,
-  userObject: undefined,
-  availableRoles: [],
+  authInfo: {
+    permissions: [],
+    userRole: undefined,
+    userObject: undefined,
+    availableRoles: [],
+  },
   selectedPermissions: [],
   onlyLogin: undefined,
   role: undefined,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Gate);
+export default connect(mapStateToProps, mapDispatchToProps)(Gate);

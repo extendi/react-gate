@@ -37,7 +37,6 @@ const defaultConfig = {
     },
   ],
   reduxAction: defaultAction,
-  loginActionType: 'LOGIN_USER',
 };
 
 /* eslint-disable max-len */
@@ -105,10 +104,10 @@ describe('Gate component', () => {
     const wrapper = mount(<ConfiguredDom />);
     // expect(wrapper.find('#notfound').length).toEqual(1);
     //store.subscribe(() => console.log(store.getState()))
-    store.dispatch({type: 'TEST'});
-    store.dispatch(mockActionLogin());
-    store.dispatch(mockActionUpdate());
-
+    //store.dispatch({type: 'TEST'});
+    //store.dispatch(mockActionLogin());
+    //store.dispatch(mockActionUpdate());
+    console.log(store.getState());
     // expect(actionsFired).toEqual([{ type: 'CUSTOM_ACTION', auth: 'authSuccess' }]);
   });
 });
