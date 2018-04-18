@@ -24,11 +24,13 @@ export const errorBoundary = () => (class ErrorCatcher extends React.Component {
   }
   
   componentDidCatch(error, info) {
-    window.console.log('Error catched :)', error, info);
-    this.setState({ error: info });
+    console.log(error, info);
+    this.setState({ error: "Errore" });
   }
-
   render() {
+    if (this.state.error) {
+      return <div> {this.state.error} </div>;
+    }
     return this.props.children;
   }
 });
