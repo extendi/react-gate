@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 export const ProtectedComponent = (props) => {
   console.log('diocane', props);
@@ -12,11 +13,30 @@ export const NoAuthComponent = () => (
 );
 export const defaultRoleSelector = state => state.user.role;
 export const defaultLoggedSelector = state => state.user.isLogged;
-export const defaultAction = { type: 'TEST_ACTION' };
+export const defaultAction = () => ({ type: 'TEST_ACTION' });
 export const mockActionLogin = () => ({ type: 'LOGIN_USER' });
 export const mockActionUpdate = () => ({ type: 'UPDATE_USER' });
 export const mockActionRemove = () => ({ type: 'REMOVE_USER' });
+export const bindLocationChanger = route => withRouter(class RouteChanger extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.changeRouting = this.changeRouting.bind(this);
+  }
+
+  changeRouting() {
+    this.props.history.push(route);
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <button onClick={this.changeRouting} id="changeroute">Change</button>
+        {this.props.children}
+      </React.Fragment>
+    );
+  }
+});
 export function mockReducer(state = {}, action) {
   switch (action.type) {
     case 'LOGIN_USER': {
