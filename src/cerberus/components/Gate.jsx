@@ -63,7 +63,6 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
       !(this.props.onlyLogin === undefined && this.props.authInfo.availableRoles.indexOf(this.props.forRole) === -1)
       , 'Invalid role selected',
     );
-
     this.state = {
       permissions: this.props.authInfo.permissions
         .filter(p => this.props.selectedPermissions.indexOf(p.name) !== -1)
@@ -72,9 +71,6 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
     };
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.authInfo !== nextProps.authInfo;
-  }
   render() {
     const {
       authInfo: {

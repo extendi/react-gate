@@ -239,6 +239,27 @@ describe('Gate component', () => {
     const actions = store.getActions();
     expect(actions).toEqual([{ type: 'TEST_ACTION', result: 'authFailed' }]);
   });
+  it('Should not dispatch action with appropriate result and redirect to component404', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, reduxAction: undefined }).reduxConfig();
+    const defaultState = authReducer(undefined, {});
+    const store = mockedStore({ user: { isLogged: true, role: 'basic' }, authProvider: defaultState });
+    const AuthJSX = (
+      <Route
+        exact
+        path="/test"
+        render={props => (
+          <Gate forRole="admin">
+            <ProtectedComponent {...props} />
+          </Gate>
+        )}
+      />
+    );
+    const ConfiguredDom = RouteSkeleton(store, AuthJSX);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#notfound').length).toEqual(1);
+    const actions = store.getActions();
+    expect(actions).toEqual([]);
+  });
   it('Should dispatch action with appropriate result and redirect to redirectPath', () => {
     const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
     const defaultState = authReducer(undefined, {});
@@ -259,6 +280,27 @@ describe('Gate component', () => {
     expect(wrapper.find('#noauth').length).toEqual(1);
     const actions = store.getActions();
     expect(actions).toEqual([{ type: 'TEST_ACTION', result: 'authFailed' }]);
+  });
+  it('Should not dispatch action with appropriate result and redirect to redirectPath', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined, reduxAction: undefined }).reduxConfig();
+    const defaultState = authReducer(undefined, {});
+    const store = mockedStore({ user: { isLogged: true, role: 'basic' }, authProvider: defaultState });
+    const AuthJSX = (
+      <Route
+        exact
+        path="/test"
+        render={props => (
+          <Gate forRole="admin">
+            <ProtectedComponent {...props} />
+          </Gate>
+        )}
+      />
+    );
+    const ConfiguredDom = RouteSkeleton(store, AuthJSX);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+    const actions = store.getActions();
+    expect(actions).toEqual([]);
   });
   it('Should dispatch action with appropriate result and access the route', () => {
     const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
@@ -336,6 +378,21 @@ describe('Gate component', () => {
     });
     const AuthJSX = (
       <Gate onlyLogin store={store} selectedPermissions={['canWrite', 'canRead']} >
+        <ProtectedComponent />
+      </Gate>
+    );
+    const wrapper = mount(AuthJSX);
+    expect(wrapper.find('#protected').length).toEqual(1);
+  });
+  it('Should login and dispatch no action because is not provided', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined, reduxAction: undefined }).reduxConfig();
+    const defaultState = authReducer(undefined, {});
+    const store = mockedStore({
+      user: { isLogged: true, role: 'basic' },
+      authProvider: defaultState,
+    });
+    const AuthJSX = (
+      <Gate onlyLogin store={store} >
         <ProtectedComponent />
       </Gate>
     );
@@ -436,53 +493,5 @@ describe('Gate component', () => {
     const ConfiguredDom = RouteSkeleton(store, authJSX);
     const wrapper = mount(<ConfiguredDom />);
     expect(wrapper.find('#noauth').length).toEqual(1);
-  });
-  it('Component Should update when new authinfo props is provided', () => {
-    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
-    const store = configRealStore(authReducer);
-    const authJSX = (
-      <Route
-        exact
-        path="/test"
-        render={props => (
-          <Gate onlyLogin>
-            <ProtectedComponent {...props} />
-          </Gate>
-        )}
-      />
-    );
-    const ConfiguredDom = RouteSkeleton(store, authJSX);
-    const spyShouldUpdate = jest.spyOn(Gate.prototype, 'shouldComponentUpdate');
-    const wrapper = mount(<ConfiguredDom />);
-    const beforeUpdateGateProps = wrapper.find('Gate').props().authInfo;
-    store.dispatch(mockActionUpdate());
-    wrapper.update();
-    expect(spyShouldUpdate.mock.calls.length).toEqual(1);
-    const afterUpdateGateProps = wrapper.find('Gate').props().authInfo;
-    expect(afterUpdateGateProps).not.toEqual(beforeUpdateGateProps);
-  });
-  it('Component Should not update when no new authinfo props is provided', () => {
-    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
-    const store = configRealStore(authReducer);
-    const authJSX = (
-      <Route
-        exact
-        path="/test"
-        render={props => (
-          <Gate onlyLogin>
-            <ProtectedComponent {...props} />
-          </Gate>
-        )}
-      />
-    );
-    const ConfiguredDom = RouteSkeleton(store, authJSX);
-    const spyShouldUpdate = jest.spyOn(Gate.prototype, 'shouldComponentUpdate');
-    const wrapper = mount(<ConfiguredDom />);
-    const beforeUpdateGateProps = wrapper.find('Gate').props().authInfo;
-    store.dispatch(mockActionOtherStuff());
-    //wrapper.update();
-    expect(spyShouldUpdate.mock.calls.length).toEqual(1);
-    const afterUpdateGateProps = wrapper.find('Gate').props().authInfo;
-    //expect(afterUpdateGateProps).toEqual(beforeUpdateGateProps);
   });
 });
