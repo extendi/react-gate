@@ -8,6 +8,8 @@
     "react/no-array-index-key": 0,
     "jsx-a11y/interactive-supports-focus":0,
     "react/no-did-mount-set-state": 0,
+    "no-underscore-dangle" : 0,
+    "react/jsx-filename-extension" : 0,
     "max-len": [2, 120, 8],
     "no-console": [ "error", {
         "allow": ["error"]
