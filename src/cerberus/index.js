@@ -1,4 +1,3 @@
 // @flow
-import Initializer from './initializer';
-
-export default Initializer;
+export { default as Initializer } from './initializer';
+export { default as Gate } from './components/Gate';
