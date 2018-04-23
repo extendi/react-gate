@@ -16,7 +16,6 @@ const GateConfig = {
   roleSelector: state => state.user.role,
   loginSelector: state => state.user.id,
   redirectPath: '/noauth',
-  Component404: NotFound,
   permissions: [
     {
       name: 'canWrite',
@@ -30,7 +29,7 @@ const GateConfig = {
 };
 
 const { authReducer } = new Initializer(GateConfig).reduxConfig();
-const store = createStore(combineReducers({ user: userReducer, authProvider: authReducer }));
+const store = createStore(combineReducers({ user: userReducer, authProvider: authReducer }), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 const App = () => (
   <Provider store={store} >
@@ -38,7 +37,7 @@ const App = () => (
       <Switch>
         <Route exact path="/home" component={Home} />
         <Route exact path="/auth" render={props => (
-            <Gate forRole="basic" >
+            <Gate forRole="admin" >
                 <Protected {...props} />
             </Gate>
         )} />

@@ -2,7 +2,7 @@ import { LOGOUT_USER, CHANGE_ROLE, RESET_USER } from './actions';
 
 const initialState = {
   id: 42,
-  role: 'admin',
+  role: 'basic',
 };
 
 export default function userReducer(state = initialState, action) {
