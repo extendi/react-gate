@@ -20,7 +20,7 @@ type GateProps = {
   children: React.Node,
   onlyLogin?: boolean,
   action: (reduxAction: any, result: string) => {},
-  role?: string,
+  forRole?: string,
   selectedPermissions: Array<string>,
 };
 
@@ -56,11 +56,11 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
   constructor(props) {
     super(props);
     invariant(
-      this.props.onlyLogin || this.props.role,
+      this.props.onlyLogin || this.props.forRole,
       'You must specify one of onlyLogin or role props!',
     );
     invariant(
-      !(this.props.onlyLogin === undefined && this.props.authInfo.availableRoles.indexOf(this.props.role) === -1)
+      !(this.props.onlyLogin === undefined && this.props.authInfo.availableRoles.indexOf(this.props.forRole) === -1)
       , 'Invalid role selected',
     );
 
@@ -83,12 +83,12 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
         userRole,
         userObject,
       },
-      role,
+      forRole,
       onlyLogin,
       action,
     } = this.props;
     if (
-      (!onlyLogin && userRole === role && Predicate.and(...this.state.permissions)()) ||
+      (!onlyLogin && userRole === forRole && Predicate.and(...this.state.permissions)()) ||
             (userObject && onlyLogin)
     ) {
       if (reduxAction) action(reduxAction, AUTH_SUCCESSFUL);
@@ -118,7 +118,7 @@ Gate.propTypes = {
   }),
   selectedPermissions: PropTypes.arrayOf(PropTypes.string),
   onlyLogin: PropTypes.bool,
-  role: PropTypes.string,
+  forRole: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -134,7 +134,7 @@ Gate.defaultProps = {
   },
   selectedPermissions: [],
   onlyLogin: undefined,
-  role: undefined,
+  forRole: undefined,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gate);
