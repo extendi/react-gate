@@ -19,3 +19,5 @@ DockerFile
 *.min.js
 .dockerignore
 localTesting/
+coverage
+.vscode
