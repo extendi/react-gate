@@ -16,7 +16,24 @@ export const mockActionOtherStuff = () => ({ type: 'OTHER_STUFF' });
 export const mockActionUpdate = () => ({ type: 'UPDATE_USER' });
 export const mockActionRemove = () => ({ type: 'REMOVE_USER' });
 export const mockActionNewSelector = () => ({ type: 'NEW_SELECTOR' });
-
+export const defaultConfig = {
+  roles: ['admin', 'basic'],
+  roleSelector: defaultRoleSelector,
+  loginSelector: defaultLoggedSelector,
+  redirectPath: '/noauth',
+  Component404: NotFoundComponent,
+  permissions: [
+    {
+      name: 'canWrite',
+      predicates: [state => state.canWrite, state => state.canWrite2],
+    },
+    {
+      name: 'canRead',
+      predicates: [state => state.canRead, state => state.canRead2],
+    },
+  ],
+  reduxAction: defaultAction,
+};
 export const errorBoundary = () => (class ErrorCatcher extends React.Component {
   constructor(props) {
     super(props);
