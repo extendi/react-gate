@@ -9,6 +9,14 @@ import Protected from './components/Protected';
 import userReducer from './reducer';
 import { Initializer, Gate } from '../../lib/react-gate';
 
+const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
+  serialize: {
+    options: {
+      undefined: true,
+      function(fn) { return fn.toString(); },
+    },
+  },
+});
 const GateConfig = {
   roles: ['admin', 'basic'],
   roleSelector: state => state.user.role,
@@ -29,7 +37,7 @@ const GateConfig = {
 const { authReducer } = new Initializer(GateConfig).reduxConfig();
 const store = createStore(
   combineReducers({ user: userReducer, authProvider: authReducer }),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  reduxDevTools,
 );
 
 const App = () => (
@@ -40,6 +48,15 @@ const App = () => (
         <Route
           exact
           path="/auth"
+          render={props => (
+            <Gate onlyLogin >
+              <Protected {...props} />
+            </Gate>
+        )}
+        />
+        <Route
+          exact
+          path="/roleauth"
           render={props => (
             <Gate forRole="admin" >
               <Protected {...props} />
