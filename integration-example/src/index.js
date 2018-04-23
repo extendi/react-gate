@@ -6,8 +6,9 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import NoAuth from './components/NoAuth';
 import NotFound from './components/NotFound';
+import Protected from './components/Protected';
 import userReducer from './reducer';
-import { Initializer } from '../../lib/react-gate';
+import { Initializer, Gate } from '../../lib/react-gate';
 console.log(Initializer)
 
 const GateConfig = {
@@ -36,6 +37,11 @@ const App = () => (
     <HashRouter>
       <Switch>
         <Route exact path="/home" component={Home} />
+        <Route exact path="/auth" render={props => (
+            <Gate forRole="basic" >
+                <Protected {...props} />
+            </Gate>
+        )} />
         <Route exact path="/noauth" component={NoAuth} />
         <Route component={Home} />
       </Switch>
