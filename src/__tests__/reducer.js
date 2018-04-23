@@ -1,39 +1,17 @@
 import Reducer from '../cerberus/redux/reducer';
-import { updateInfo, setupInternals } from '../cerberus/redux/actions';
+import { defaultConfig } from './common';
+import { INITIALIZE_AUTH_INTERNALS } from '../cerberus/redux/actions';
 
 
 describe('Auth reducer', () => {
   it('Should return default state', () => {
-    expect(Reducer(undefined, {})).toEqual({});
+    const reducer = Reducer(defaultConfig);
+    expect(reducer(undefined, {})).toEqual(defaultConfig);
   });
 
-  it('Should handle auth stuff updating', () => {
-    const reducerResult = Reducer({
-      userRole: 'basic',
-      userObject: 'lol',
-    }, updateInfo({ loginSelector: true, roleSelector: 'admin' }));
-    expect(reducerResult).toEqual({ userRole: 'admin', userObject: true });
-  });
-
-  it('Should handle auth initialization', () => {
-    const loginSelector = jest.fn();
-    const roleSelector = jest.fn();
-    const reducerResult = Reducer({
-      userRole: 'basic',
-      userObject: 'lol',
-    }, setupInternals({
-      loginSelector,
-      roleSelector,
-      redirectPath: '/login',
-    }));
-    expect(reducerResult).toEqual({
-      userRole: 'basic',
-      userObject: 'lol',
-      internals: {
-        loginSelector,
-        roleSelector,
-        redirectPath: '/login',
-      },
-    });
+  it('Should initialize auth state', () => {
+    const reducer = Reducer(defaultConfig);
+    expect(reducer(undefined, { type: INITIALIZE_AUTH_INTERNALS, internals: { Component404: undefined } }))
+      .toEqual({ ...defaultConfig, Component404: undefined });
   });
 });
