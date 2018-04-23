@@ -7,9 +7,9 @@ import Home from './components/Home';
 import NoAuth from './components/NoAuth';
 import NotFound from './components/NotFound';
 import userReducer from './reducer';
-import Lol from './authLib/estrajs';
-console.log(Lol)
-/*
+import { Initializer } from '../../lib/react-gate';
+console.log(Initializer)
+
 const GateConfig = {
   roles: ['admin', 'basic'],
   roleSelector: state => state.user.role,
@@ -28,9 +28,8 @@ const GateConfig = {
   ],
 };
 
-const { authReducer } = Initializer(GateConfig);
-*/
-const store = createStore(combineReducers({ user: userReducer }));
+const { authReducer } = new Initializer(GateConfig).reduxConfig();
+const store = createStore(combineReducers({ user: userReducer, authProvider: authReducer }));
 
 const App = () => (
   <Provider store={store} >

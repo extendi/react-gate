@@ -2,7 +2,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const path = require('path');
 
-const libraryName = 'redux-gate';
+const libraryName = 'react-gate';
 
 const propTypesExternals = {
   root: 'PropTypes',
@@ -48,7 +48,7 @@ const reactDOMExternals = {
 
 module.exports = {
   entry: {
-    cerberus: [`${__dirname}/src/react-gate/index.js`],
+    'react-gate': [`${__dirname}/src/react-gate/index.js`],
   },
   output: {
     path: path.join(__dirname, './lib'),
