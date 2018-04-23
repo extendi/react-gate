@@ -25,11 +25,11 @@ const GateConfig = {
   permissions: [
     {
       name: 'canWrite',
-      predicates: [state => state.canWrite, state => state.canWrite2],
+      predicates: [state => state.user.canWrite, state => state.user.canWrite2],
     },
     {
       name: 'canRead',
-      predicates: [state => state.canRead, state => state.canRead2],
+      predicates: [state => state.user.canRead, state => state.user.canRead2],
     },
   ],
 };

@@ -6,8 +6,6 @@ import { changeRole } from '../actions';
 import { RefreshConfig } from '../../../lib/react-gate';
 import NotFound from './NotFound';
 
-window.console.log(RefreshConfig({ Component404: NotFound }));
-
 const mapDispatchToProps = dispatch => ({
   roleChanger: role => dispatch(changeRole(role)),
   add404: config => dispatch(RefreshConfig(config)),

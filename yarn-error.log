@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js test ./src/__tests__/initializer.js --coverage
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js test
 
 PATH: 
   /Users/cdimonaco/.rvm/gems/ruby-2.4.1/bin:/Users/cdimonaco/.rvm/gems/ruby-2.4.1@global/bin:/Users/cdimonaco/.rvm/rubies/ruby-2.4.1/bin:/Users/cdimonaco/.zplug/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/cdimonaco/.rvm/bin:/Users/cdimonaco/.fzf/bin
@@ -15,7 +15,7 @@ Platform:
 
 npm manifest: 
   {
-    "name": "cerberus-redux-auth",
+    "name": "react-gate",
     "version": "0.1.0",
     "description": "Authentication and role management wrapper for react applications",
     "main": "index.js",
@@ -73,7 +73,7 @@ npm manifest:
       "redux-mock-store": "^1.5.1"
     },
     "jest": {
-      "testPathIgnorePatterns" : ["./src/__tests__/common.jsx"]
+      "testPathIgnorePatterns" : ["./src/__tests__/common.jsx","./src/integration-example"]
     }
   }
 
@@ -8069,7 +8069,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c jest ./src/__tests__/initializer.js --coverage
+  Arguments: -c jest
   Directory: /Users/cdimonaco/code/extendi/frontend/cerberus-redux-auth
   Output:
   
