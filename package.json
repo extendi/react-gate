@@ -1,5 +1,5 @@
 {
-  "name": "cerberus-redux-auth",
+  "name": "react-gate",
   "version": "0.1.0",
   "description": "Authentication and role management wrapper for react applications",
   "main": "index.js",
