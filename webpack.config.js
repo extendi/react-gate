@@ -2,7 +2,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const path = require('path');
 
-const libraryName = 'cerberusAuth';
+const libraryName = 'redux-gate';
 
 const propTypesExternals = {
   root: 'PropTypes',
