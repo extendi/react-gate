@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-export const ProtectedComponent = props => <div id="protected">I am super protected!</div>;
+export const ProtectedComponent = () => <div id="protected">I am super protected!</div>;
 export const NotFoundComponent = () => (
   <div id="notfound">Nun c sta nient u zì!</div>
 );
@@ -10,8 +10,9 @@ export const NoAuthComponent = () => (
 );
 export const defaultRoleSelector = state => state.user.role;
 export const defaultLoggedSelector = state => state.user.isLogged;
-export const defaultAction = () => ({ type: 'TEST_ACTION' });
+export const defaultAction = result => ({ type: 'TEST_ACTION', result });
 export const mockActionLogin = () => ({ type: 'LOGIN_USER' });
+export const mockActionOtherStuff = () => ({ type: 'OTHER_STUFF' });
 export const mockActionUpdate = () => ({ type: 'UPDATE_USER' });
 export const mockActionRemove = () => ({ type: 'REMOVE_USER' });
 export const mockActionNewSelector = () => ({ type: 'NEW_SELECTOR' });
@@ -80,6 +81,12 @@ export function mockReducer(state = {}, action) {
       return {
         ...state,
         newSelector: true,
+      };
+    }
+    case 'OTHER_STUFF': {
+      return {
+        ...state,
+        otherStuff: true,
       };
     }
     default: {
