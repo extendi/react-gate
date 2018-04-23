@@ -39,6 +39,5 @@ describe('Library initializer', () => {
     const result = intializer.reduxConfig();
     expect(spyed.mock.instances[0].configuration).toEqual(defaultConfig);
     expect(result).toHaveProperty('authReducer');
-    expect(result).toHaveProperty('middleware');
   });
 });
