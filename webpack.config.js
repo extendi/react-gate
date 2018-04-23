@@ -48,7 +48,7 @@ const reactDOMExternals = {
 
 module.exports = {
   entry: {
-    cerberus: [`${__dirname}/src/cerberus/index.js`],
+    cerberus: [`${__dirname}/src/react-gate/index.js`],
   },
   output: {
     path: path.join(__dirname, './lib'),

@@ -5,9 +5,9 @@ import { createStore, combineReducers } from 'redux';
 import Enzyme, { mount, render, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
-import { setupInternals } from '../cerberus/redux/actions';
-import Gate from '../cerberus/components/Gate';
-import Initializer from '../cerberus/initializer';
+import { setupInternals } from '../react-gate/redux/actions';
+import Gate from '../react-gate/components/Gate';
+import Initializer from '../react-gate/initializer';
 import {
   NotFoundComponent,
   NoAuthComponent,

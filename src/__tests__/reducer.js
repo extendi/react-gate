@@ -1,6 +1,6 @@
-import Reducer from '../cerberus/redux/reducer';
+import Reducer from '../react-gate/redux/reducer';
 import { defaultConfig } from './common';
-import { INITIALIZE_AUTH_INTERNALS } from '../cerberus/redux/actions';
+import { INITIALIZE_AUTH_INTERNALS } from '../react-gate/redux/actions';
 
 
 describe('Auth reducer', () => {

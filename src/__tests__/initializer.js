@@ -1,4 +1,4 @@
-import Initializer from '../cerberus/initializer';
+import Initializer from '../react-gate/initializer';
 import { NotFoundComponent, defaultRoleSelector, defaultLoggedSelector, defaultAction } from './common';
 
 const defaultConfig = {

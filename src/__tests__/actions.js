@@ -1,4 +1,4 @@
-import { setupInternals, INITIALIZE_AUTH_INTERNALS } from '../cerberus/redux/actions';
+import { setupInternals, INITIALIZE_AUTH_INTERNALS } from '../react-gate/redux/actions';
 import { defaultConfig } from './common';
 
 describe('Auth action', () => {
