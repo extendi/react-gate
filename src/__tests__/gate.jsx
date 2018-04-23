@@ -1,11 +1,12 @@
+/* eslint-disable max-len */
+
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
-import Enzyme, { mount, render, shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
-import { setupInternals } from '../react-gate/redux/actions';
 import Gate from '../react-gate/components/Gate';
 import Initializer from '../react-gate/initializer';
 import {
@@ -18,10 +19,6 @@ import {
   mockReducer,
   mockActionLogin,
   mockActionRemove,
-  mockActionUpdate,
-  errorBoundary,
-  mockActionOtherStuff,
-  mockActionNewSelector,
   bindLocationChanger,
 } from './common';
 
@@ -63,7 +60,6 @@ const configRealStore = reducer => createStore(
   combineReducers({ authProvider: reducer, user: mockReducer }),
   { user: { isLogged: true, role: 'basic' } },
 );
-const CustomAction = result => ({ type: 'CUSTOM_ACTION', auth: result });
 
 const RouteSkeleton = (store, configuredAuth) => () => (
   <Provider store={store}>

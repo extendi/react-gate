@@ -44,6 +44,7 @@ const mapStateToProps = ({
     authConfig: { Component404, redirectPath },
     availableRoles: roles,
     reduxAction,
+    /* eslint-disable max-len */
     permissions: permissions && permissions.map(p => ({ name: p.name, predicates: p.predicates.map(f => closurize(state, f)) })),
   },
 });
@@ -53,6 +54,17 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
+  static defaultProps = {
+    authInfo: {
+      permissions: [],
+      userRole: undefined,
+      userObject: undefined,
+      availableRoles: [],
+    },
+    selectedPermissions: [],
+    onlyLogin: undefined,
+    forRole: undefined,
+  };
   constructor(props) {
     super(props);
     invariant(
@@ -119,18 +131,6 @@ Gate.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-};
-
-Gate.defaultProps = {
-  authInfo: {
-    permissions: [],
-    userRole: undefined,
-    userObject: undefined,
-    availableRoles: [],
-  },
-  selectedPermissions: [],
-  onlyLogin: undefined,
-  forRole: undefined,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gate);

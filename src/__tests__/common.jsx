@@ -34,24 +34,7 @@ export const defaultConfig = {
   ],
   reduxAction: defaultAction,
 };
-export const errorBoundary = () => (class ErrorCatcher extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { error: null };
-  }
-  
-  componentDidCatch(error, info) {
-    console.log(error, info);
-    this.setState({ error: "Errore" });
-  }
-  render() {
-    if (this.state.error) {
-      return <div> {this.state.error} </div>;
-    }
-    return this.props.children;
-  }
-});
+/* eslint-disable */
 export const bindLocationChanger = () => withRouter(class RouteChanger extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +45,6 @@ export const bindLocationChanger = () => withRouter(class RouteChanger extends R
   changeRouting(route) {
     this.props.history.push(route);
   }
-
   render() {
     return (
       <React.Fragment>
@@ -74,6 +56,7 @@ export const bindLocationChanger = () => withRouter(class RouteChanger extends R
     );
   }
 });
+/* eslint-enable */
 export function mockReducer(state = {}, action) {
   switch (action.type) {
     case 'LOGIN_USER': {
