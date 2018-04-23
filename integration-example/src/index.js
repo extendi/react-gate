@@ -5,11 +5,9 @@ import { createStore, combineReducers } from 'redux';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import NoAuth from './components/NoAuth';
-import NotFound from './components/NotFound';
 import Protected from './components/Protected';
 import userReducer from './reducer';
 import { Initializer, Gate } from '../../lib/react-gate';
-console.log(Initializer)
 
 const GateConfig = {
   roles: ['admin', 'basic'],
@@ -39,11 +37,15 @@ const App = () => (
     <HashRouter>
       <Switch>
         <Route exact path="/home" component={Home} />
-        <Route exact path="/auth" render={props => (
+        <Route
+          exact
+          path="/auth"
+          render={props => (
             <Gate forRole="admin" >
-                <Protected {...props} />
+              <Protected {...props} />
             </Gate>
-        )} />
+        )}
+        />
         <Route exact path="/noauth" component={NoAuth} />
         <Route component={Home} />
       </Switch>
