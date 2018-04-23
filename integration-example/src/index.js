@@ -29,7 +29,10 @@ const GateConfig = {
 };
 
 const { authReducer } = new Initializer(GateConfig).reduxConfig();
-const store = createStore(combineReducers({ user: userReducer, authProvider: authReducer }), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(
+  combineReducers({ user: userReducer, authProvider: authReducer }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 const App = () => (
   <Provider store={store} >
