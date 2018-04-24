@@ -13,7 +13,6 @@ dist
 build/*
 DockerFile
 *.conf
-*.sh
 .idea/
 *.min.js
 .dockerignore
