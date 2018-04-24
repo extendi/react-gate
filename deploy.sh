@@ -9,6 +9,6 @@ ssh-add keys.pub
 # Build with webpack and push the library to the repo
 yarn build
 git add ./lib
-git commit -m "Building release for commit ${CURRENT_SHA}"
+git commit -m "Building release for commit ${SHA}"
 git push
 
