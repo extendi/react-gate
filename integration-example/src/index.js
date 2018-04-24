@@ -63,6 +63,15 @@ const App = () => (
             </Gate>
         )}
         />
+        <Route
+          exact
+          path="/permissionsauth"
+          render={props => (
+            <Gate forRole="admin" selectedPermissions={['canRead', 'canWrite']} >
+              <Protected {...props} />
+            </Gate>
+        )}
+        />
         <Route exact path="/noauth" component={NoAuth} />
         <Route component={Home} />
       </Switch>
