@@ -1,6 +1,27 @@
 language: node_js
 node_js:
-  - "stable"
+- stable
 cache:
   directories:
   - node_modules
+dd:
+- openssl aes-256-cbc -K $encrypted_4b8c039429e2_key -iv $encrypted_4b8c039429e2_iv
+  -in keys.pub.enc -out keys.pub -d
+
+env:
+  global:
+    - CURRENT_SHA: git rev-parse --verify HEAD
+
+before_deploy:
+      - git config --global user.email "info@extendi.it"
+      - git config --global user.name "Travis CI - Extendi"
+      - chmod 600 ./keys.pub
+      - eval `ssh-agent -s`
+      - ssh-add keys.pub
+
+deploy:
+  skip_cleanup: true
+  - yarn build
+  - git add .
+  - git commit -m "Building release for commit ${CURRENT_SHA}"
+  - git push
