@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 SHA=`git rev-parse --verify HEAD`
-REPO=`git@github.com:extendi/react-gate.git`
+REPO="git@github.com:extendi/react-gate.git"
 SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
 
 # Adding deploy ssh key.
@@ -14,5 +14,4 @@ yarn build
 git add ./lib
 git commit -m "Building release for commit ${SHA}"
 git push $SSH_REPO travis-integration
-
 
