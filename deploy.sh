@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 SHA=`git rev-parse --verify HEAD`
-REPO=`git config remote.origin.url`
+REPO=`git@github.com:extendi/react-gate.git`
 SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
 
 # Adding deploy ssh key.
