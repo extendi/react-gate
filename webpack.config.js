@@ -47,12 +47,10 @@ const reactDOMExternals = {
 };
 
 module.exports = {
-  entry: {
-    'react-gate': [`${__dirname}/src/react-gate/index.js`],
-  },
+  entry: `${__dirname}/src/react-gate/index.js`,
   output: {
     path: path.join(__dirname, './lib'),
-    filename: '[name].js',
+    filename: `${libraryName}.js`,
     library: libraryName,
     libraryTarget: 'umd',
     umdNamedDefine: true,
