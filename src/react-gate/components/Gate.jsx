@@ -100,7 +100,7 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
             (userObject && onlyLogin)
     ) {
       if (reduxAction) action(reduxAction, AUTH_SUCCESSFUL);
-      return this.props.children;
+      return React.Children.only(this.props.children);
     }
     if (authConfig.Component404) {
       if (reduxAction) action(reduxAction, AUTH_FAILED);
