@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js test
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js test -t Should render nothing if no children or rende props are provided to the component
 
 PATH: 
   /Users/cdimonaco/.rvm/gems/ruby-2.4.1/bin:/Users/cdimonaco/.rvm/gems/ruby-2.4.1@global/bin:/Users/cdimonaco/.rvm/rubies/ruby-2.4.1/bin:/Users/cdimonaco/.zplug/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/cdimonaco/.rvm/bin:/Users/cdimonaco/.fzf/bin
@@ -70,10 +70,14 @@ npm manifest:
       "react-redux": "^5.0.7",
       "react-router-dom": "^4.2.2",
       "redux": "^3.7.2",
-      "redux-mock-store": "^1.5.1"
+      "redux-mock-store": "^1.5.1",
+      "warning": "^3.0.0"
     },
     "jest": {
-      "testPathIgnorePatterns" : ["./src/__tests__/common.jsx","./src/integration-example"]
+      "testPathIgnorePatterns": [
+        "./src/__tests__/common.jsx",
+        "./integration-example"
+      ]
     }
   }
 
@@ -8069,7 +8073,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c jest
+  Arguments: -c jest -t 'Should render nothing if no children or rende props are provided to the component'
   Directory: /Users/cdimonaco/code/extendi/frontend/cerberus-redux-auth
   Output:
   

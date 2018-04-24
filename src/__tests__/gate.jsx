@@ -158,7 +158,34 @@ describe('Gate component', () => {
     );
     expect(() => mount(AuthJSX)).toThrowError();
   });
-
+  it('Should render component with render prop instead of children if provided both', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
+    const store = configRealStore(authReducer);
+    const AuthJSX = (
+      <Route
+        exact
+        path="/test"
+        render={() => (
+          <Gate onlyLogin render={authProps => (<ProtectedComponent {...authProps} />)} >
+            <div id="childrendiv">I am the child</div>
+          </Gate>
+        )}
+      />
+    );
+    const ConfiguredDom = RouteSkeleton(store, AuthJSX);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#childrendiv').length).toEqual(0);
+    expect(wrapper.find('#protected').length).toEqual(1);
+  });
+  it('Should render nothing if no children or rende props are provided to the component', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
+    const store = configRealStore(authReducer);
+    const AuthJSX = (
+      <Gate store={store} onlyLogin />
+    );
+    const wrapper = mount(AuthJSX);
+    expect(wrapper.html()).toBeNull();
+  });
   it('Should not permit access to the route because user object is not defined', () => {
     const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
     const store = configRealStore(authReducer);
@@ -379,6 +406,20 @@ describe('Gate component', () => {
     );
     const wrapper = mount(AuthJSX);
     expect(wrapper.find('#protected').length).toEqual(1);
+  });
+  it('Should login because the props is onlyLogin and render the component with render props', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
+    const defaultState = authReducer(undefined, {});
+    const store = mockedStore({
+      user: { isLogged: true, role: 'basic' },
+      authProvider: defaultState,
+    });
+    const AuthJSX = (
+      <Gate onlyLogin selectedPermissions={['canWrite', 'canRead']} store={store} render={authProps => (<ProtectedComponent {...authProps} />)} />
+    );
+    const wrapper = mount(AuthJSX);
+    expect(wrapper.find('#protected').length).toEqual(1);
+    expect(wrapper.find('ProtectedComponent').props()).toEqual({ onlyLogin: true, selectedPermissions: ['canWrite', 'canRead'] });
   });
   it('Should login and dispatch no action because is not provided', () => {
     const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined, reduxAction: undefined }).reduxConfig();

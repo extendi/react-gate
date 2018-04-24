@@ -2,6 +2,7 @@
 import * as React from 'react';
 import Predicate from 'predicate';
 import invariant from 'invariant';
+import warning from 'warning';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -19,6 +20,7 @@ type GateProps = {
   },
   children: React.Node,
   onlyLogin?: boolean,
+  render: (props: any) => React.Node,
   action: (reduxAction: any, result: string) => {},
   forRole?: string,
   selectedPermissions: Array<string>,
@@ -63,6 +65,8 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
     },
     selectedPermissions: [],
     onlyLogin: undefined,
+    children: undefined,
+    render: undefined,
     forRole: undefined,
   };
   constructor(props) {
@@ -74,6 +78,10 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
     invariant(
       !(this.props.onlyLogin === undefined && this.props.authInfo.availableRoles.indexOf(this.props.forRole) === -1)
       , 'Invalid role selected',
+    );
+    warning(
+      !(this.props.children && this.props.render),
+      'You should specify one of children or render props, children will be ignored',
     );
     this.state = {
       permissions: this.props.authInfo.permissions
@@ -94,13 +102,17 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
       forRole,
       onlyLogin,
       action,
+      render,
+      selectedPermissions,
     } = this.props;
+    const renderProps = { forRole, onlyLogin, selectedPermissions };
     if (
       (!onlyLogin && userRole === forRole && Predicate.and(...this.state.permissions)()) ||
             (userObject && onlyLogin)
     ) {
       if (reduxAction) action(reduxAction, AUTH_SUCCESSFUL);
-      return React.Children.only(this.props.children);
+      if (render) return render(renderProps);
+      return this.props.children ? React.Children.only(this.props.children) : null;
     }
     if (authConfig.Component404) {
       if (reduxAction) action(reduxAction, AUTH_FAILED);
@@ -127,10 +139,11 @@ Gate.propTypes = {
   selectedPermissions: PropTypes.arrayOf(PropTypes.string),
   onlyLogin: PropTypes.bool,
   forRole: PropTypes.string,
+  render: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-  ]).isRequired,
+  ]),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gate);

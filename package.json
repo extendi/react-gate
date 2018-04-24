@@ -54,9 +54,13 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-mock-store": "^1.5.1"
+    "redux-mock-store": "^1.5.1",
+    "warning": "^3.0.0"
   },
   "jest": {
-    "testPathIgnorePatterns" : ["./src/__tests__/common.jsx","./integration-example"]
+    "testPathIgnorePatterns": [
+      "./src/__tests__/common.jsx",
+      "./integration-example"
+    ]
   }
 }
