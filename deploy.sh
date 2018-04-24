@@ -15,6 +15,6 @@ git checkout travis-integration
 yarn install
 yarn build
 git add ./lib
-git commit -m "Building release for commit ${SHA}"
+git commit -m "Building release for commit ${SHA} [skip-ci]"
 git push $SSH_REPO travis-integration
 
