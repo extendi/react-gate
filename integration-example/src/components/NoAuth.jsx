@@ -1,12 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+  currentRole: state.user.role,
+  authRoles: state.authProvider.roles,
+});
 
 const NoAuthComponent = ({ currentRole, authRoles }) => (
   <React.Fragment>
     <div>
             You are not authorized to access this route. <br />
-      { currentRole && <p>The role for this role: {currentRole} </p> }
+      { currentRole && <p>The role for this user: {currentRole} </p> }
       { authRoles.map((role, key) => (
         <p key={key} >Role available: {role} </p>
             ))}
@@ -27,5 +33,5 @@ NoAuthComponent.defaultProps = {
   authRoles: [],
 };
 
-export default NoAuthComponent;
+export default connect(mapStateToProps)(NoAuthComponent);
 

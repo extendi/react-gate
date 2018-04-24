@@ -23,7 +23,7 @@ const Home = ({
   addPermissions,
 }) => (
   <React.Fragment>
-    <h1>Home</h1>
+    <h1>React Gate Demo</h1>
     <div>
       <Link to="/auth"><button> Auth route </button></Link>
       <Link to="/roleauth"><button> Role auth route </button></Link>
