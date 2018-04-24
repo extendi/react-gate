@@ -12,6 +12,7 @@ git clone $REPO out
 cd out
 git checkout travis-integration
 # Build with webpack and push the library to the repo
+yarn install
 yarn build
 git add ./lib
 git commit -m "Building release for commit ${SHA}"
