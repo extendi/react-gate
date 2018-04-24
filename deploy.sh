@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 SHA=`git rev-parse --verify HEAD`
+REPO=`git config remote.origin.url`
+SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
+
 # Adding deploy ssh key.
 openssl aes-256-cbc -K $encrypted_9b89288d412e_key -iv $encrypted_9b89288d412e_iv -in keys.enc -out keys -d
 chmod 600 ./keys
@@ -10,5 +13,6 @@ ssh-add keys
 yarn build
 git add ./lib
 git commit -m "Building release for commit ${SHA}"
-git push
+git push $SSH_REPO travis-integration
+
 
