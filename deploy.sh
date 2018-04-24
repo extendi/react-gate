@@ -2,10 +2,10 @@
 set -e
 SHA=`git rev-parse --verify HEAD`
 # Adding deploy ssh key.
-openssl aes-256-cbc -K $encrypted_4b8c039429e2_key -iv $encrypted_4b8c039429e2_iv -in keys.pub.enc -out keys.pub -d
-chmod 600 ./keys.pub
+openssl aes-256-cbc -K $encrypted_9b89288d412e_key -iv $encrypted_9b89288d412e_iv -in keys.enc -out keys -d
+chmod 600 ./keys
 eval `ssh-agent -s`
-ssh-add keys.pub
+ssh-add keys
 # Build with webpack and push the library to the repo
 yarn build
 git add ./lib

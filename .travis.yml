@@ -1,14 +1,12 @@
 language: node_js
 node_js:
 - stable
-
 cache:
   directories:
   - node_modules
-
 before_deploy:
-      - git config --global user.email "info@extendi.it"
-      - git config --global user.name "Travis CI - Extendi"
+- git config --global user.email "info@extendi.it"
+- git config --global user.name "Travis CI - Extendi"
 
 deploy:
   skip_cleanup: true
