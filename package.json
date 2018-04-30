@@ -1,6 +1,6 @@
 {
   "name": "react-gate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Authentication and role management wrapper for react applications",
   "main": "index.js",
   "repository": "git@bitbucket.org:extendi/cerberus-redux-auth.git",
