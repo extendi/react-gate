@@ -2,7 +2,7 @@
   "name": "react-gate",
   "version": "0.1.1",
   "description": "Authentication and role management wrapper for react applications",
-  "main": "index.js",
+  "main": "lib/react-gate.js",
   "repository": "git@bitbucket.org:extendi/cerberus-redux-auth.git",
   "author": "Carmine Di Monaco <dimonaco@extendi.it>",
   "scripts": {
