@@ -223,6 +223,27 @@ describe('Gate component', () => {
     const wrapper = mount(<ConfiguredDom />);
     expect(wrapper.find('#noauth').length).toEqual(1);
   });
+  it('Should not permit access to the route because role is invalid for the route, and user role is not present in configuration provided roles', () => {
+    const { authReducer } = new Initializer({ ...defaultConfig, Component404: undefined }).reduxConfig();
+    const store = createStore(
+      combineReducers({ authProvider: authReducer, user: mockReducer }),
+      { user: { isLogged: true, role: 'FUFFA' } },
+    );
+    const AuthJSX = (
+      <Route
+        exact
+        path="/test"
+        render={props => (
+          <Gate forRole="admin">
+            <ProtectedComponent {...props} />
+          </Gate>
+        )}
+      />
+    );
+    const ConfiguredDom = RouteSkeleton(store, AuthJSX);
+    const wrapper = mount(<ConfiguredDom />);
+    expect(wrapper.find('#noauth').length).toEqual(1);
+  });
   it('Should not permit access to the route because role is invalid and go to 404 defined component', () => {
     const { authReducer } = new Initializer({ ...defaultConfig }).reduxConfig();
     const store = configRealStore(authReducer);
