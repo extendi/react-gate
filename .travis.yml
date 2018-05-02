@@ -8,7 +8,7 @@ cache:
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
-notification:
+notifications:
   email:
     recipients:
       - react-gate@extendi.it
