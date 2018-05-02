@@ -10,4 +10,7 @@ after_script:
 
 notification:
   email:
-    - react-gate@extendi.it
+    recipients:
+      - react-gate@extendi.it
+    on_success: always
+    on_failure: always
