@@ -21,3 +21,4 @@ lib/
 localTesting/
 coverage
 .vscode
+_book/
