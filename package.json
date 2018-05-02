@@ -1,7 +1,7 @@
 {
   "name": "react-gate",
-  "version": "0.1.1",
-  "description": "Authentication and role management wrapper for react applications",
+  "version": "0.1.0",
+  "description": "Authentication and role management library for react application",
   "main": "lib/react-gate.js",
   "module": "lib/react-gate.es6.js",
   "unpkg": "lib/react-gate.umd.js",
