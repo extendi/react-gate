@@ -5,6 +5,9 @@ cache:
   directories:
   - node_modules
 
+script:
+  - yarn build:doc
+
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
@@ -14,3 +17,11 @@ notifications:
       - react-gate@extendi.it
     on_success: always
     on_failure: always
+
+deploy:
+  provider: pages
+  local-dir: ./site/_book
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  on:
+    branch: master
