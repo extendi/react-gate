@@ -12,7 +12,8 @@
   "author": "Extendi - info@extendi.it",
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/.bin/rollup -c",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "prepublish": "yarn test"
   },
   "license": "MIT",
   "devDependencies": {
