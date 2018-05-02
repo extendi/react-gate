@@ -7,7 +7,7 @@
   "author": "Carmine Di Monaco <dimonaco@extendi.it>",
   "scripts": {
     "build": "./node_modules/.bin/webpack --progress --colors --mode production",
-    "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "jest --coverage"
   },
   "license": "MIT",
   "devDependencies": {
