@@ -4,6 +4,7 @@
   "description": "Authentication and role management wrapper for react applications",
   "main": "lib/react-gate.js",
   "module": "lib/react-gate.es6.js",
+  "unpkg": "lib/react-gate.umd.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/extendi/react-gate"
