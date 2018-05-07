@@ -9,6 +9,17 @@
     "type": "git",
     "url": "https://github.com/extendi/react-gate"
   },
+  "keywords": [
+    "react",
+    "redux",
+    "javascript",
+    "authorization",
+    "login",
+    "permissions",
+    "roles",
+    "react gate",
+    "gate"
+  ],
   "author": "Extendi - info@extendi.it",
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/.bin/rollup -c",
@@ -68,7 +79,8 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "warning": "^3.0.0"
   },
   "jest": {
     "testPathIgnorePatterns": [
