@@ -1,5 +1,5 @@
-<div style="text-align:center;">
-    <img src="logo.svg" height="150">
+<p align="center">
+    <img src="logo.svg" height="200">
 </div>
 
 [![Build Status](https://travis-ci.org/extendi/react-gate.svg?branch=master)](https://travis-ci.org/extendi/react-gate)
