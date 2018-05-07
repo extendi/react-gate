@@ -118,7 +118,6 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
       if (reduxAction) action(reduxAction, AUTH_FAILED);
       return <authConfig.Component404 />;
     }
-    console.log('Redirected', userObject);
     if (reduxAction) action(reduxAction, AUTH_FAILED);
     return <Redirect to={authConfig.redirectPath} />;
   }
