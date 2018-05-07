@@ -4,9 +4,11 @@ node_js:
 cache:
   directories:
   - node_modules
+  - $HOME/.gitbook
 
 
 before_script:
+  - mkdir -p ~/.gitbook/versions/$GITBOOK_VERSION/node_modules
   - cp -a node_modules/highlight.js/. ~/.gitbook/versions/$GITBOOK_VERSION/node_modules/highlight.js/
 
 script:
@@ -21,10 +23,6 @@ notifications:
       - react-gate@extendi.it
     on_success: always
     on_failure: always
-
-cache:
-  directories:
-    - $HOME/.gitbook
 
 deploy:
   provider: pages
