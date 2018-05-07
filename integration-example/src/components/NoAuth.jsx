@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -10,14 +12,13 @@ const mapStateToProps = state => ({
 
 const NoAuthComponent = ({ currentRole, authRoles }) => (
   <React.Fragment>
-    <div>
-            You are not authorized to access this route. <br />
-      { currentRole && <p>The role for this user: {currentRole} </p> }
-      { authRoles.map((role, key) => (
-        <p key={key} >Role available: {role} </p>
-            ))}
-      <Link to="/home">
-        <button>Return to home</button>
+    <div className="container mt-5 text-center" style={{maxWidth: '500px'}}>
+      <div className="alert alert-danger p-5">
+        <h2>You are not authorized to access this route.</h2>
+        { currentRole && <p className="mt-3 mb-0">Your role is {currentRole} </p> }
+      </div>
+      <Link to="/home" className="btn btn-outline-secondary btn-lg mt-4">
+        Return to home
       </Link>
     </div>
   </React.Fragment>
