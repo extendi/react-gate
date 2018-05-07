@@ -1,6 +1,6 @@
 # Reducer
 
-`React Gate` should be initialized by the store with the authProvider reducer.
+`ReactGate` should be initialized by the store with the authProvider reducer.
 
 This reducer holds the configuration of library and handles the runtime changing of settings.
 

@@ -97,7 +97,7 @@ All the permissions and all the predicates are in AND condition when check for a
 
 You can specify a custom redux action to dispatch when the authentication phase for each route access is complete.
 
-`React Gate` will pass, as first argument to your action, the 'result' of the authentication phase.
+`ReactGate` will pass, as first argument to your action, the 'result' of the authentication phase.
 
 The result can be:
 

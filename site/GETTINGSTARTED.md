@@ -29,7 +29,7 @@ const GateConfig = {
 const GateInstance = new Initializer(GateConfig);
 ```
 
-Retrieve the `React Gate` reducer and mount to your existing reducer with the key authProvider
+Retrieve the `ReactGate` reducer and mount to your existing reducer with the key authProvider
 
 ```js
     const { authReducer } = GateInstance.reduxConfig();

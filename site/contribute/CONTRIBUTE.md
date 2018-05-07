@@ -1,12 +1,12 @@
-# Contributing to React Gate
+# Contributing to ReactGate
 
-Contributing to `React Gate` doesn’t mean necessarily fixing bugs or adding a new code.
+Contributing to `ReactGate` doesn’t mean necessarily fixing bugs or adding a new code.
 All suggestions and/or critics are welcomed Sono bene accetti tutti i suggerimenti e/o le critiche al progetto, as long ad they are constructive and motivated.
 
 ## Do a suggestion
 
 Open an issue and clearly explain with code’s examples if necessary. 
-If you suggestion is about the performance or the conflicts of `React Gate` with other libraries, you will specify them and the involved use cases.
+If you suggestion is about the performance or the conflicts of `ReactGate` with other libraries, you will specify them and the involved use cases.
 
 ## Submitting Proposals
 
@@ -20,7 +20,7 @@ If you find a bug please follow this template in the issue:
 ```
 ### Description of bug
 
-### React Gate version
+### ReactGate version
 ### Redux version
 ### React version
 

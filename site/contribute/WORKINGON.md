@@ -1,4 +1,4 @@
-# Working on React Gate
+# Working on ReactGate
 
 ### Prerequisites
 

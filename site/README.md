@@ -1,11 +1,11 @@
 # Logo
 
-`React-Gate` is a permission/authentication solution for React application built on top of `React Router` and `Redux`.
+`ReactGate` is a permission/authentication solution for React application built on top of `React Router` and `Redux`.
 
 
 ### The Goal
 
-``React Gate`` provides a backend-indipendent solution, you can even choose not to use backend at all.
+``ReactGate`` provides a backend-indipendent solution, you can even choose not to use backend at all.
 
 This library provides a React component called Gate, as the name suggest, you can use the component to deny the access to certain parts of your application according to provided configuration.
 

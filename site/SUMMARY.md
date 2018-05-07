@@ -10,4 +10,4 @@
     * [Reducer](usage/REDUCER.md)
 * Contribute
     * [How](contribute/CONTRIBUTE.md)
-    * [Working on React Gate](contribute/WORKINGON.md)
+    * [Working on ReactGate](contribute/WORKINGON.md)
