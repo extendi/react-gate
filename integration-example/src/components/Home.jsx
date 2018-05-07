@@ -42,9 +42,9 @@ const Home = ({
           <div className="form-inline justify-content-between">
             <span>Make me admin:</span>
             <input
-              type="checkbox"
+              type="button"
               id="id-name--1"
-              className={`switch-input ${currentRole === 'admin' ? 'active' : ' '}`}
+              className={`switch-input ${currentRole === 'admin' ? 'active' : ''}`}
               onClick={() => roleChanger(currentRole === 'admin' ? 'basic' : 'admin')}
             />
             <label
@@ -55,7 +55,7 @@ const Home = ({
           <div className="form-inline justify-content-between mt-3">
             <span>Give me permissions:</span>
             <input
-              type="checkbox"
+              type="button"
               id="id-name--2"
               className={`switch-input ${permissionsActive ? 'active' : ' '}`}
               onClick={() => togglePerm()}
@@ -68,15 +68,14 @@ const Home = ({
           <div className="form-inline justify-content-between mt-3">
             <span>Redirect to 404:</span>
             <input
-              type="checkbox"
+              type="button"
               id="id-name--3"
               className={`switch-input ${active404 ? 'active' : ' '}`}
+              onClick={() => (active404 ? remove404() : add404())}
             />
             <label
               htmlFor="id-name--3"
-              role="button"
               className="switch-label my-2"
-              onClick={() => (active404 ? remove404() : add404())}
             />
           </div>
         </div>
