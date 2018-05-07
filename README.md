@@ -1,4 +1,11 @@
-# Logo
+<img align="center" src="logo.svg" />
+
+
+</br>
+</br>
+</br>
+</br>
+
 
 `React-Gate` is a permission/authentication solution for React application built on top of `React Router` and `Redux`.
 
