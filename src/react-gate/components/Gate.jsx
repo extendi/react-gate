@@ -107,7 +107,7 @@ class Gate extends React.Component <GateProps, { permissions: Array<any> }> {
     } = this.props;
     const renderProps = { forRole, onlyLogin, selectedPermissions };
     if (
-      (!onlyLogin && userRole === forRole && Predicate.and(...this.state.permissions)()) ||
+      (!onlyLogin && userObject && userRole === forRole && Predicate.and(...this.state.permissions)()) ||
             (userObject && onlyLogin)
     ) {
       if (reduxAction) action(reduxAction, AUTH_SUCCESSFUL);
