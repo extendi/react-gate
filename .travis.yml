@@ -2,7 +2,7 @@ branches:
   only:
     - master
     - gh_pages
-
+    - /^pages-release-.*$/
 language: node_js
 node_js:
   - "node"
