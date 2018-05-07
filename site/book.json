@@ -1,0 +1,26 @@
+{
+    "plugins": [
+      "github-buttons",
+      "github"
+    ],
+    "pluginsConfig": {
+    "github": {
+        "url": "https://github.com/extendi/react-gate"
+      },
+      "github-buttons": {
+        "buttons": [{
+          "user": "extendi",
+          "repo": "react-gate",
+          "type": "star",
+          "count": true,
+          "size": "small"
+        }, {
+            "user": "extendi",
+            "repo": "react-gate",
+            "type": "watch",
+            "count": true,
+            "size": "small"
+          }]
+      }
+    }
+  }
