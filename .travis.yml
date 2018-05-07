@@ -18,8 +18,9 @@ notifications:
     on_success: always
     on_failure: always
 
-before_script:
-  - rm -rf ~/.gitbook
+cache:
+  directories:
+    - $HOME/.gitbook
 
 deploy:
   provider: pages
