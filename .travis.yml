@@ -1,3 +1,8 @@
+branches:
+  only:
+    - master
+    - gh_pages
+
 language: node_js
 node_js:
   - "node"
@@ -25,6 +30,5 @@ deploy:
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   on:
-    branch: master
     tags: true
     condition: $TRAVIS_TAG =~ ^pages-release-.*$
