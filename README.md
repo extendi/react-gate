@@ -1,6 +1,6 @@
 <p align="center">
     <img src="https://s3.eu-west-2.amazonaws.com/npm-extendi/ReactGate.svg" height="200">
-</div>
+</p>
 
 [![Build Status](https://travis-ci.org/extendi/react-gate.svg?branch=master)](https://travis-ci.org/extendi/react-gate)
 [![Coverage Status](https://coveralls.io/repos/github/extendi/react-gate/badge.svg?branch=master)](https://coveralls.io/github/extendi/react-gate?branch=master)
