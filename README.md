@@ -1,16 +1,15 @@
-<img align="center" src="logo.svg" />
-
-
-</br>
-</br>
-</br>
-</br>
-
-
-`React-Gate` is a permission/authentication solution for React application built on top of `React Router` and `Redux`.
+<div style="text-align:center;">
+    <img src="logo.svg" height="150">
+</div>
 
 [![Build Status](https://travis-ci.org/extendi/react-gate.svg?branch=master)](https://travis-ci.org/extendi/react-gate)
 [![Coverage Status](https://coveralls.io/repos/github/extendi/react-gate/badge.svg?branch=master)](https://coveralls.io/github/extendi/react-gate?branch=master)
+
+
+</br>
+</br>
+
+`React-Gate` is a permission/authentication solution for React application built on top of `React Router` and `Redux`.
 
 
 ### The Goal
