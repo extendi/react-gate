@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="logo.svg" height="200">
+    <img src="https://s3.eu-west-2.amazonaws.com/npm-extendi/ReactGate.svg" height="200">
 </div>
 
 [![Build Status](https://travis-ci.org/extendi/react-gate.svg?branch=master)](https://travis-ci.org/extendi/react-gate)
