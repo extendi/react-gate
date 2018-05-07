@@ -14,7 +14,7 @@
     "build": "NODE_ENV=production ./node_modules/.bin/rollup -c",
     "test": "jest --coverage",
     "prepublish": "yarn test",
-    "build:doc": "cd site && node_modules/.bin/gitbook install && node_modules/.bin/gitbook build"
+    "build:doc": "node_modules/.bin/gitbook install site/ && node_modules/.bin/gitbook build site/"
   },
   "license": "MIT",
   "devDependencies": {
