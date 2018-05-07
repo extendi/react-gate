@@ -1,4 +1,9 @@
-import { LOGOUT_USER, CHANGE_ROLE, RESET_USER, GIVE_PERMISSIONS } from './actions';
+import {
+  LOGOUT_USER,
+  CHANGE_ROLE,
+  RESET_USER,
+  PERMISSIONS_TOGGLE,
+} from './actions';
 
 const initialState = {
   id: 42,
@@ -21,13 +26,13 @@ export default function userReducer(state = initialState, action) {
         ...initialState,
       };
     }
-    case GIVE_PERMISSIONS: {
+    case PERMISSIONS_TOGGLE: {
       return {
         ...state,
-        canRead: true,
-        canRead2: true,
-        canWrite: true,
-        canWrite2: true,
+        canRead: !state.canRead,
+        canRead2: !state.canRead,
+        canWrite: !state.canWrite,
+        canWrite2: !state.canWrite2,
       };
     }
     default:
