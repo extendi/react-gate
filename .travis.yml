@@ -18,6 +18,9 @@ notifications:
     on_success: always
     on_failure: always
 
+before_deploy:
+  - rm -rf ~/.gitbook
+
 deploy:
   provider: pages
   local-dir: ./site/_book
