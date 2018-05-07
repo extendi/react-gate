@@ -58,7 +58,7 @@ const Home = ({
               className="switch-label my-2"
             />
           </div>
-          <div className="form-inline justify-content-between mt-3">
+          <div className="form-inline justify-content-between">
             <span>Give me permissions:</span>
             <input
               type="button"
@@ -71,7 +71,7 @@ const Home = ({
               className="switch-label my-2"
             />
           </div>
-          <div className="form-inline justify-content-between mt-3">
+          <div className="form-inline justify-content-between">
             <span>Redirect to 404:</span>
             <input
               type="button"
@@ -84,7 +84,7 @@ const Home = ({
               className="switch-label my-2"
             />
           </div>
-          <div className="form-inline justify-content-between mt-3">
+          <div className="form-inline justify-content-between">
             <span>Logged in</span>
             <input
               type="button"
@@ -107,7 +107,6 @@ const Home = ({
       <div className="row">
         <div className="col-md-4">
           <Link to="/roleauth" className="btn btn-block btn-success btn-lg my-2">Test roles</Link>
-
           <p className="text-softer mt-3 mx-auto" >Admin only area.</p>
         </div>
         <div className="col-md-4">
