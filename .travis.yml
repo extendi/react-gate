@@ -5,6 +5,10 @@ cache:
   directories:
   - node_modules
 
+
+before_script:
+  - cp -a node_modules/highlight.js/. ~/.gitbook/versions/$GITBOOK_VERSION/node_modules/highlight.js/
+
 script:
   - yarn build:doc
 
