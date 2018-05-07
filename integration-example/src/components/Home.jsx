@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { changeRole, togglePermissions } from '../actions';
+import { changeRole, togglePermissions, userReset, userLogout } from '../actions';
 import { RefreshConfig } from '../../../lib/react-gate';
 import NotFound from './NotFound';
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
@@ -12,10 +12,13 @@ const mapDispatchToProps = dispatch => ({
   add404: () => dispatch(RefreshConfig({ Component404: NotFound })),
   remove404: () => dispatch(RefreshConfig({ Component404: undefined })),
   togglePerm: () => dispatch(togglePermissions()),
+  logout: () => dispatch(userLogout()),
+  resetUser: () => dispatch(userReset()),
 });
 
 const mapStateToProps = state => ({
   currentRole: state.user.role,
+  logoutStatus: state.user.id,
   active404: state.authProvider.Component404,
   permissionsActive: state.user.canRead && state.user.canWrite && state.user.canRead2 && state.user.canWrite2,
 });
@@ -23,6 +26,9 @@ const mapStateToProps = state => ({
 const Home = ({
   currentRole,
   roleChanger,
+  logout,
+  resetUser,
+  logoutStatus,
   add404,
   remove404,
   permissionsActive,
@@ -78,6 +84,19 @@ const Home = ({
               className="switch-label my-2"
             />
           </div>
+          <div className="form-inline justify-content-between mt-3">
+            <span>Logged in</span>
+            <input
+              type="button"
+              id="id-name--4"
+              className={`switch-input ${logoutStatus ? 'active' : ' '}`}
+              onClick={() => (logoutStatus ? logout() : resetUser())}
+            />
+            <label
+              htmlFor="id-name--4"
+              className="switch-label my-2"
+            />
+          </div>
         </div>
 
       </div>
@@ -111,10 +130,18 @@ Home.propTypes = {
   currentRole: PropTypes.string.isRequired,
   roleChanger: PropTypes.func.isRequired,
   add404: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  resetUser: PropTypes.func.isRequired,
   remove404: PropTypes.func.isRequired,
   togglePerm: PropTypes.func.isRequired,
-  permissionsActive: PropTypes.bool.isRequired,
-  active404: PropTypes.bool.isRequired,
+  permissionsActive: PropTypes.bool,
+  logoutStatus: PropTypes.number.isRequired,
+  active404: PropTypes.func,
+};
+
+Home.defaultProps = {
+  permissionsActive: false,
+  active404: undefined,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
