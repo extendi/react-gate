@@ -2,9 +2,9 @@
   "name": "react-gate",
   "version": "0.1.0",
   "description": "Authentication and role management library for react application",
-  "main": "lib/react-gate.js",
+  "main": "lib/index.js",
   "module": "lib/react-gate.es6.js",
-  "unpkg": "lib/react-gate.umd.js",
+  "unpkg": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/extendi/react-gate"
@@ -69,7 +69,8 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup-plugin-uglify": "^3.0.0",
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "invariant": "^2.2.3",
