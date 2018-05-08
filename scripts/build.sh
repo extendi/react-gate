@@ -7,7 +7,7 @@ if [[ $TRAVIS_TAG =~ ^pages-release-.*$ ]]; then
     yarn build
     cd integration-example
     yarn install
-    yarn build
+    PUBLIC_URL=https://extendi.github.io/react-gate/ yarn build
     cd ..
     mv site/_book site/docs
     mv site/docs integration-example/build/docs
