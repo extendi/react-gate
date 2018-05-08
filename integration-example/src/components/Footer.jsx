@@ -15,8 +15,7 @@ const Footer = () => (
           />Created by Extendi
         </a> &middot;
       <a href="https://extendi.github.io/react-gate/">Home</a> &middot;
-      <a href="/">Demo</a> &middot;
-       <a href="https://extendi.github.io/react-gate/">Docs</a> &middot;
+       <a href="https://extendi.github.io/react-gate/docs">Docs</a> &middot;
        <a href="https://github.com/extendi/react-gate">GitHub</a>
       </div>
     </footer>
