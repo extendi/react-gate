@@ -10,7 +10,7 @@ if [[ $TRAVIS_TAG =~ ^pages-release-.*$ ]]; then
     yarn build
     cd ..
     mv site/_book site/docs
-    mv site/docs integration-example/docs
+    mv site/docs integration-example/build/docs
     echo "Gitbook has built the doc site for github pages"
 else
     echo "No need to build gitbook stuff."
