@@ -8,6 +8,8 @@ import NoAuth from './components/NoAuth';
 import Protected from './components/Protected';
 import userReducer from './reducer';
 import { Initializer, Gate } from '../../lib/react-gate';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
   serialize: {
@@ -41,44 +43,48 @@ const store = createStore(
 );
 
 const App = () => (
-  <Provider store={store} >
-    <HashRouter>
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route
-          exact
-          path="/auth"
-          render={props => (
-            <Gate onlyLogin >
-              <Protected {...props} />
-            </Gate>
+  <React.Fragment>
+    <Header />
+    <Provider store={store} >
+      <HashRouter>
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route
+            exact
+            path="/auth"
+            render={props => (
+              <Gate onlyLogin >
+                <Protected {...props} />
+              </Gate>
         )}
-        />
-        <Route
-          exact
-          path="/roleauth"
-          render={props => (
-            <Gate forRole="admin" >
-              <Protected {...props} />
-            </Gate>
+          />
+          <Route
+            exact
+            path="/roleauth"
+            render={props => (
+              <Gate forRole="admin" >
+                <Protected {...props} />
+              </Gate>
         )}
-        />
-        <Route
-          exact
-          path="/permissionsauth"
-          render={() => (
-            <Gate
-              forRole="admin"
-              selectedPermissions={['canRead', 'canWrite']}
-              render={authProps => (<Protected {...authProps} />)}
-            />
+          />
+          <Route
+            exact
+            path="/permissionsauth"
+            render={() => (
+              <Gate
+                forRole="admin"
+                selectedPermissions={['canRead', 'canWrite']}
+                render={authProps => (<Protected {...authProps} />)}
+              />
         )}
-        />
-        <Route exact path="/noauth" component={NoAuth} />
-        <Route component={Home} />
-      </Switch>
-    </HashRouter>
-  </Provider>
+          />
+          <Route exact path="/noauth" component={NoAuth} />
+          <Route component={Home} />
+        </Switch>
+      </HashRouter>
+    </Provider>
+    <Footer />
+  </React.Fragment>
 );
 
 ReactDOM.render(<App />, document.getElementById('root'));
