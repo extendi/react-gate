@@ -27,7 +27,7 @@ notifications:
 
 deploy:
   provider: pages
-  local-dir: ./site/_book
+  local-dir: ./integration-example/build
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   on:
