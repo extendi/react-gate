@@ -5,6 +5,7 @@ if [[ $TRAVIS_TAG =~ ^pages-release-.*$ ]]; then
     cp -a node_modules/highlight.js/. ~/.gitbook/versions/$GITBOOK_VERSION/node_modules/highlight.js/
     yarn build:doc
     cd integration-example
+    yarn install
     PUBLIC_URL=https://extendi.github.io/react-gate/ yarn build
     cd ..
     echo "Gitbook has built the doc site for github pages"
