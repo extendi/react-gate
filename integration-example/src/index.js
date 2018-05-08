@@ -7,7 +7,7 @@ import Home from './components/Home';
 import NoAuth from './components/NoAuth';
 import Protected from './components/Protected';
 import userReducer from './reducer';
-import { Initializer, Gate } from '../../lib/react-gate';
+import { Initializer, Gate } from '../../lib';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
