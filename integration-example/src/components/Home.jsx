@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { changeRole, togglePermissions, userReset, userLogout } from '../actions';
 import { RefreshConfig } from '../../../lib';
 import NotFound from './NotFound';
-/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 
 const mapDispatchToProps = dispatch => ({
   roleChanger: role => dispatch(changeRole(role)),
