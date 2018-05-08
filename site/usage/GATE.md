@@ -12,11 +12,11 @@ The Gate component is the core of the library.
     selectedPermissions?: Array<string>,
 ```
 
-### Children & Render props
+### Children & Render props 
 
 You can choose to render the protected component in two different ways.
 
-#### Render prop
+#### Render prop {#renderprop}
 
 The function passed to `render` prop, takes as first argument these props
 
@@ -62,7 +62,7 @@ Protected component
 );
 ```
 
-#### Children Prop
+#### Children Prop {#children}
 
 You can render your protected component as a Gate's child
 
@@ -77,7 +77,7 @@ You can render your protected component as a Gate's child
         )}
 ```
 
-### onlyLogin
+### onlyLogin {#onlyLogin}
 
 This boolean prop is used to permit the route access to anyone who did the login.
 
@@ -85,7 +85,7 @@ This prop have priority over forRole and selectedPermission props, so if no role
 
 With this prop the component will pick the loginStatus using loginSelector, defined in the configuration object.
 
-### forRole
+### forRole {#forRole}
 
 This prop defines the role which has access to the route and the selected role must be among the possible roles declared in the configuration.
 
@@ -106,7 +106,7 @@ If this is not true, the component will raise an error.
         />
 ```
 
-### selectedPermissions
+### selectedPermissions {#selectedPermissions}
 
 This prop should be an array of strings which should indicate the names of the permissions we want to apply to the route.
 
