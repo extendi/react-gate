@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import NoAuth from './components/NoAuth';
 import Protected from './components/Protected';
@@ -46,7 +46,7 @@ const App = () => (
   <React.Fragment>
     <Header />
     <Provider store={store} >
-      <BrowserRouter basename={`${process.env.PUBLIC_URL}`}>
+      <HashRouter>
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route
@@ -81,7 +81,7 @@ const App = () => (
           <Route exact path="/noauth" component={NoAuth} />
           <Route component={Home} />
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
     <Footer />
   </React.Fragment>
