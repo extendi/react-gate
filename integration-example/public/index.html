@@ -20,21 +20,73 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <style>
+      body{color:#2c3e50;}
+      .text-soft{color: #37516B !important}
+      .text-softer{color: #4e6e8e;}
+      .text-softest{color: #6a8bad;}
+      .border-soft{border-color: #F4F6F8 !important}
+      .bg-soft{background-color: #FCFDFD !important}
+      
+      h1,.h1{font-size: 3rem;}
+      hr{border-color: #eaecef;}
+      .btn-success{background-color: #3eaf7c;border-color: #3eaf7c;}
+      .btn-success:hover{background-color: #4abf8a;border-color: #4abf8a;}
+      
+      a,a:hover{color:#2d7f5a;}
+      a:hover{color:#20543d;}
+      
+      .switch-input {
+        display: none;
+      }
+      .switch-label {
+        position: relative;
+        display: inline-block;
+        min-width: 14px;
+        cursor: pointer;
+        padding: 0 0 0 36px;
+        height: 24px;
+        
+      }
+      .switch-label:before, .switch-label:after {
+        content: "";
+        position: absolute;
+        margin: 0;
+        outline: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        transition: all 0.3s ease;
+      }
+      .switch-label:before {
+        left: 1px;
+        width: 34px;
+        height: 14px;
+        background-color: #9E9E9E;
+        border-radius: 8px;
+      }
+      .switch-label:after {
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background-color: #FAFAFA;
+        border-radius: 50%;
+        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
+      }
+      
+      .switch-input.active + .switch-label:before,
+      .switch-input:checked + .switch-label:before {
+        background-color: #A5D6A7;
+      }
+      .switch-input.active + .switch-label:after,
+      .switch-input:checked + .switch-label:after {
+        background-color: #3eaf7c;
+        transform: translate(80%, -50%);
+      }
+    </style>    
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
