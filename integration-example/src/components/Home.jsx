@@ -36,7 +36,7 @@ const Home = ({
 }) => (
   <React.Fragment>
     <div className="container mt-sm-5 px-5 pt-5 text-center">
-      <img src="/reactgate_logo_h.svg" className="img-fluid" alt="Logo" />
+      <img src="reactgate_logo_h.svg" className="img-fluid" alt="Logo" />
       <p className="text-softest h3 font-weight-normal mt-4">Authentication for React applications</p>
     </div>
 
@@ -113,8 +113,8 @@ const Home = ({
           <p className="text-softer mt-3 mx-auto">Admin with permissions area. </p>
         </div>
         <div className="col-md-4">
-          <Link to="/auth" className="btn btn-block btn-success btn-lg my-2">Public area</Link>
-          <p className="text-softer mt-3 mx-auto">Anyone can access it.</p>
+          <Link to="/auth" className="btn btn-block btn-success btn-lg my-2">Logged area</Link>
+          <p className="text-softer mt-3 mx-auto">Logged users has the access.</p>
         </div>
       </div>
     </div>

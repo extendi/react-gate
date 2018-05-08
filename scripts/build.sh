@@ -7,8 +7,10 @@ if [[ $TRAVIS_TAG =~ ^pages-release-.*$ ]]; then
     yarn build
     cd integration-example
     yarn install
-    PUBLIC_URL=https://extendi.github.io/react-gate/ yarn build
+    yarn build
     cd ..
+    mv site/_book site/docs
+    mv site/docs integration-example/docs
     echo "Gitbook has built the doc site for github pages"
 else
     echo "No need to build gitbook stuff."
