@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "module": "lib/react-gate.es6.js",
   "unpkg": "lib/index.js",
+  "homepage": "https://extendi.github.io/react-gate/",
   "repository": {
     "type": "git",
     "url": "https://github.com/extendi/react-gate"
