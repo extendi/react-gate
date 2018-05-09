@@ -29,6 +29,7 @@ deploy:
   provider: pages
   local-dir: ./integration-example/build
   skip-cleanup: true
+  script: echo "Deploy on github pages"
   github-token: $GITHUB_TOKEN
   on:
     tags: true
