@@ -38,7 +38,7 @@ export default [
       format: 'es',
     },
     external: externals,
-    plugins: [flow(), resolve({ extensions: ['.js', '.jsx'] }), commonjs(), babel(babelConf), filesize()],
+    plugins: [flow(), resolve({ extensions: ['.js', '.jsx'] }), commonjs(), babel(babelConf), filesize(), uglify({}, minify)],
   },
   {
     input: 'src/react-gate/index.js',
