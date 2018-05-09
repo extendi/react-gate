@@ -2,6 +2,7 @@ branches:
   only:
     - master
     - gh_pages
+    - travis-build-stages-test
     - /^pages-release-.*$/
 
 language: node_js
@@ -21,7 +22,6 @@ jobs:
         provider: pages
         local-dir: ./integration-example/build
         skip-cleanup: true
-        script: echo "Deploy on github pages"
         github-token: $GITHUB_TOKEN
 
 after_script:
