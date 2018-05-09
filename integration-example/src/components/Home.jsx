@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { changeRole, togglePermissions, userReset, userLogout } from '../actions';
-import { RefreshConfig } from '../../../lib/react-gate';
+import { RefreshConfig } from '../../../lib';
 import NotFound from './NotFound';
-/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 
 const mapDispatchToProps = dispatch => ({
   roleChanger: role => dispatch(changeRole(role)),
@@ -37,7 +36,7 @@ const Home = ({
 }) => (
   <React.Fragment>
     <div className="container mt-sm-5 px-5 pt-5 text-center">
-      <img src="/reactgate_logo_h.svg" className="img-fluid" alt="Logo" />
+      <img src="reactgate_logo_h.svg" className="img-fluid" alt="Logo" />
       <p className="text-softest h3 font-weight-normal mt-4">Authentication for React applications</p>
     </div>
 
@@ -114,8 +113,8 @@ const Home = ({
           <p className="text-softer mt-3 mx-auto">Admin with permissions area. </p>
         </div>
         <div className="col-md-4">
-          <Link to="/auth" className="btn btn-block btn-success btn-lg my-2">Public area</Link>
-          <p className="text-softer mt-3 mx-auto">Anyone can access it.</p>
+          <Link to="/auth" className="btn btn-block btn-success btn-lg my-2">Logged area</Link>
+          <p className="text-softer mt-3 mx-auto">Logged users has the access.</p>
         </div>
       </div>
     </div>
@@ -126,7 +125,7 @@ const Home = ({
 );
 
 Home.propTypes = {
-  currentRole: PropTypes.string.isRequired,
+  currentRole: PropTypes.string,
   roleChanger: PropTypes.func.isRequired,
   add404: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
@@ -134,12 +133,14 @@ Home.propTypes = {
   remove404: PropTypes.func.isRequired,
   togglePerm: PropTypes.func.isRequired,
   permissionsActive: PropTypes.bool,
-  logoutStatus: PropTypes.number.isRequired,
+  logoutStatus: PropTypes.number,
   active404: PropTypes.func,
 };
 
 Home.defaultProps = {
   permissionsActive: false,
+  currentRole: undefined,
+  logoutStatus: undefined,
   active404: undefined,
 };
 

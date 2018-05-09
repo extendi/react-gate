@@ -1,4 +1,4 @@
-# Configuration Object
+# Configuration Object {#confobject}
 
 The object passed to AuthConfig constructor, holds all the important stuff of library.
 Let's analyze the flow type of the object in order to understand all these parts:
@@ -27,7 +27,7 @@ The loginSelector and one of redirectPath or Component404 are the only mandatory
 
 Let's break it in small pieces
 
-### The selectors
+### The selectors {#selectors}
 
 Selectors are the core concept of the framework, these functions take the redux state as first argument, so you can intercept the property in the state that corresponds to your login and role status.
 
@@ -42,7 +42,7 @@ Selectors are the core concept of the framework, these functions take the redux 
     loginSelector: state => state.user.id
 ```
 
-### RedirectPath & NotFoundComponent
+### RedirectPath & NotFoundComponent {#redirect}
 
 The redirect path should be a string that represents a route in your application, the route should be binded to a React Router route.
 
@@ -63,7 +63,7 @@ Obviously, both RedirectPath and NotFoundComponent are shown when the authentica
         redirectPath: '/noauth',
     }
 ```
-### Roles
+### Roles {#roles}
 
 The roles are simply an array of strings, they will be compared with the currentRole returned from roleSelector.
 
@@ -93,7 +93,7 @@ You don't have a fixed number of permissions neither in the release of the confi
 
 All the permissions and all the predicates are in AND condition when check for authentication.
 
-### ReduxAction
+### ReduxAction {#redux}
 
 You can specify a custom redux action to dispatch when the authentication phase for each route access is complete.
 

@@ -4,6 +4,10 @@
 
 [![Build Status](https://travis-ci.org/extendi/react-gate.svg?branch=master)](https://travis-ci.org/extendi/react-gate)
 [![Coverage Status](https://coveralls.io/repos/github/extendi/react-gate/badge.svg?branch=master)](https://coveralls.io/github/extendi/react-gate?branch=master)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![GitHub issues](https://img.shields.io/github/issues/extendi/react-gate.svg)](https://GitHub.com/extendi/react-gate/issues/)
+[![Website extendi.github.io/react-gate](https://img.shields.io/website-up-down-green-red/https/extendi.github.io/react-gate.svg)](https://extendi.github.io/react-gate)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/extendi/react-gate/graphs/commit-activity)
 
 
 </br>

@@ -3,6 +3,8 @@
 Contributing to `ReactGate` doesn’t mean necessarily fixing bugs or adding a new code.
 All suggestions and/or critics are welcomed Sono bene accetti tutti i suggerimenti e/o le critiche al progetto, as long ad they are constructive and motivated.
 
+**Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github)
+
 ## Do a suggestion
 
 Open an issue and clearly explain with code’s examples if necessary. 
