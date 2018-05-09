@@ -12,8 +12,18 @@ cache:
   - node_modules
   - $HOME/.gitbook
 
-script:
-  - bash scripts/build.sh
+jobs:
+  include:
+    - stage: Library Testing
+      script: yarn test
+    - stage: Github pages release
+      script: bash scripts/pages-deploy.sh
+      if: tag =~ ^pages-release-.*$
+      deploy:
+        provider: pages
+        local-dir: ./integration-example/build
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
 
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
@@ -24,12 +34,3 @@ notifications:
       - react-gate@extendi.it
     on_success: always
     on_failure: always
-
-deploy:
-  provider: pages
-  local-dir: ./integration-example/build
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  on:
-    tags: true
-    condition: $TRAVIS_TAG =~ ^pages-release-.*$
