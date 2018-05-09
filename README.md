@@ -13,14 +13,14 @@
 </br>
 </br>
 
-`ReactGate` is a permission/authentication solution for React application built on top of `React Router` and `Redux`.
+`ReactGate` is a permission/authentication solution for `React` application built on top of `React Router` and `Redux`.
 
 
 ### The Goal
 
-``ReactGate`` provides a backend-indipendent solution, you can even choose not to use backend at all.
+``ReactGate`` provides a backend-independent solution, you can even choose not to use a backend at all.
 
-This library provides a React component called Gate, as the name suggest, you can use the component to deny the access to certain parts of your application according to provided configuration.
+This library provides a React component called `Gate`, as the name suggest, you can use the component to deny the access to certain parts of your application according to provided configuration.
 
 The package was thought to be frankly declarative and easy to set up.
 
@@ -55,7 +55,7 @@ const GateConfig = {
 const GateInstance = new Initializer(GateConfig);
 ```
 
-Retrieve the `ReactGate` reducer and mount to your existing reducer with the key authProvider
+Retrieve the `ReactGate` reducer and mount to your existing reducer with the key `authProvider`
 
 ```js
     const { authReducer } = GateInstance.reduxConfig();
