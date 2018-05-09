@@ -30,11 +30,11 @@ The package was thought to be frankly declarative and easy to set up.
     yarn add react-gate
 ```
 
-Import the Initializer object and the Gate component
+Import the `Initializer` object and the `Gate` component
 ```js
     import { Initializer, Gate } from 'react-gate';
 ```
-Configure the Library giving an AuthConfig object to the initializer constructor
+Configure the Library giving an `AuthConfig` object to the `Initializer` constructor
 
 ```js
 const GateConfig = {
@@ -67,7 +67,7 @@ Retrieve the `ReactGate` reducer and mount to your existing reducer with the key
 
 #### Route locking 
 
-The gate component protects the auth route, in this example is configured to consent access only to logged user.
+The `Gate` component protects the auth route, in this example is configured to consent access only to logged user.
 
 ``` js
     <Route
