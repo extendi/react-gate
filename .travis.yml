@@ -2,7 +2,7 @@ branches:
   only:
     - master
     - gh_pages
-    - travis-build-stages-test
+    - travis-build-stage-test
     - /^pages-release-.*$/
 
 language: node_js
@@ -15,8 +15,10 @@ cache:
 
 jobs:
   include:
+    - stage: Library Testing
+      script: yarn test
     - stage: Github pages release
-      script: bash scripts/build.sh
+      script: bash scripts/pages-deploy.sh
       if: tag =~ ^pages-release-.*$
       deploy:
         provider: pages
