@@ -25,6 +25,8 @@ jobs:
         local-dir: ./integration-example/build
         skip_cleanup: true
         github-token: $GITHUB_TOKEN
+        on:
+          tags: true
     - stage: Npm package deploy
       script: echo "Npm package deploy" && yarn build
       if: tag =~ ^npm-release-.*$
@@ -34,7 +36,7 @@ jobs:
         skip_cleanup: true
         api_key: $NPM_TOKEN
         on:
-          branch: npm-deploy
+          tags: true
 
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
