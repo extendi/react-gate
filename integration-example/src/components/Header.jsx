@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => (
   <React.Fragment>
     <nav className="navbar navbar-expand-lg navbar-light" style={{ borderBottom: '1px solid #eaecef' }}>
-      <a className="" href="/react-gate">
+      <a className="" href="/">
         <img src="reactgate_logo.svg" height="24" alt="" />
       </a>
       <button
@@ -21,7 +21,7 @@ const Header = () => (
       <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
           <li className="nav-item">
-            <a className="nav-link" href="/react-gate">Home</a>
+            <a className="nav-link" href="/">Home</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="https://extendi.github.io/react-gate/docs/">Docs</a>
