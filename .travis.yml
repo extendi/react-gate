@@ -3,6 +3,7 @@ branches:
     - master
     - gh_pages
     - /^pages-release-.*$/
+    - /^npm-release-.*$/
 
 language: node_js
 node_js:
@@ -22,8 +23,16 @@ jobs:
       deploy:
         provider: pages
         local-dir: ./integration-example/build
-        skip-cleanup: true
+        skip_cleanup: true
         github-token: $GITHUB_TOKEN
+    - stage: Npm package deploy
+      script: echo "Npm package deploy" && yarn build
+      if: tag =~ ^npm-release-.*$
+      deploy:
+        provider: npm
+        email: info@extendi.it
+        skip_cleanup: true
+        api_key: $NPM_TOKEN
 
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
