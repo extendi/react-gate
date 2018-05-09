@@ -2,7 +2,7 @@ branches:
   only:
     - master
     - gh_pages
-    - travis-build-stage-test
+    - travis-build-stages-test
     - /^pages-release-.*$/
 
 language: node_js
