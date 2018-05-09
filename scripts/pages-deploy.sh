@@ -10,4 +10,5 @@ PUBLIC_URL=https://extendi.github.io/react-gate/ yarn build
 cd ..
 mv site/_book site/docs
 mv site/docs integration-example/build/docs
+mv CNAME integration-example/build
 echo "Gitbook has built the doc site for github pages"
