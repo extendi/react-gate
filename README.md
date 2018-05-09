@@ -84,4 +84,4 @@ See the [Docs](https://extendi.github.io/react-gate/) for futher details
 
 ## Want to contribute?
 
-See the [Contribution](https://extendi.github.io/react-gate/contribute/CONTRIBUTE.html) section of the docs
+See the [Contribution](https://extendi.github.io/react-gate/docs/contribute/CONTRIBUTE.html) section of the docs
