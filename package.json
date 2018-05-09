@@ -91,6 +91,7 @@
     ]
   },
   "files": [
-    "lib"
+    "lib",
+    "LICENSE.md"
   ]
 }
