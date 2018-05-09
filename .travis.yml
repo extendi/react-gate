@@ -33,6 +33,8 @@ jobs:
         email: info@extendi.it
         skip_cleanup: true
         api_key: $NPM_TOKEN
+        on:
+          branch: npm-deploy
 
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
