@@ -21,6 +21,7 @@ jobs:
       script: bash scripts/pages-deploy.sh
       if: tag =~ ^pages-release-.*$
       deploy:
+        keep-history: true
         provider: pages
         local-dir: ./integration-example/build
         skip_cleanup: true
