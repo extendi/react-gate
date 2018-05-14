@@ -24,7 +24,7 @@ const Header = () => (
             <a className="nav-link" href="/">Home</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="https://extendi.github.io/react-gate/docs/">Docs</a>
+            <a className="nav-link" href="https://extendi.github.io/react-gate/docs/" >Docs</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="https://github.com/extendi/react-gate">GitHub</a>

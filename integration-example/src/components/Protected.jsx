@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const ProtectedComponent = ({ onlyLogin, selectedPermissions, forRole }) => (
@@ -21,7 +22,6 @@ const ProtectedComponent = ({ onlyLogin, selectedPermissions, forRole }) => (
                 ))}
             </p>
           : <p> No permissions are requested for this route </p> }
-  
       </div>
       <Link to="/home" className="btn btn-outline-secondary btn-lg mt-4">
         Return to home

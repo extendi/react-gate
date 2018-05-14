@@ -14,10 +14,10 @@ const NoAuthComponent = ({ currentRole, permissionsActive, loggedIn }) => (
   <React.Fragment>
     <div className="container mt-5 text-center" style={{ maxWidth: '500px' }}>
       <div className="alert alert-danger p-5">
-        <h2>You are not authorized to access this route.</h2>
-        { currentRole && <p className="mt-3 mb-0">Your role is {currentRole} </p> }
-        { loggedIn ? <p> You are logged in</p> : <p> You are not logged in.</p>}
-        { permissionsActive ? <p> You have all permissions </p> : <p> You don&#39;t have all permissions.</p>}
+        <h2 ClassName="mb-3">You are not authorized to access this route.</h2>
+        { currentRole && <div>Your role is {currentRole} </div> }
+        { loggedIn ? <div> You are logged in</div> : <div> You are not logged in.</div>}
+        { permissionsActive ? <div> You have all permissions </div> : <div> You don&#39;t have all permissions.</div>}
       </div>
       <Link to="/home" className="btn btn-outline-secondary btn-lg mt-4">
         Return to home

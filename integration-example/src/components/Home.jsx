@@ -39,8 +39,7 @@ const Home = ({
       <img src="reactgate_logo_h.svg" className="img-fluid" alt="Logo" />
       <p className="text-softest h3 font-weight-normal mt-4">Authentication for React applications</p>
     </div>
-
-    <div className="container p-md-5" style={{ maxWidth: '500px' }}>
+    <div className="container container-sm p-md-5">
       <div className="card border-3 bg-soft border-soft mt-5" style={{ borderWidth: '3px' }}>
         <div className="card-body p-md-5">
           <h4 className="h5 mb-3 text-soft">Demo Settings</h4>
@@ -113,8 +112,8 @@ const Home = ({
           <p className="text-softer mt-3 mx-auto">Admin with permissions area. </p>
         </div>
         <div className="col-md-4">
-          <Link to="/auth" className="btn btn-block btn-success btn-lg my-2">Logged area</Link>
-          <p className="text-softer mt-3 mx-auto">Logged users has the access.</p>
+          <Link to="/auth" className="btn btn-block btn-success btn-lg my-2">Test login</Link>
+          <p className="text-softer mt-3 mx-auto">Logged users area.</p>
         </div>
       </div>
     </div>

@@ -11,12 +11,13 @@ const Footer = () => (
             alt="twitter logo"
             height="20"
             className="rounded-circle mr-2"
-            style={{ position: 'relative;top:-2px' }}
+            style={{ position: 'relative', top: '-2px' }}
           />Created by Extendi
-        </a> &middot;
-      <a href="https://react-gate.extendi.it">Home</a> &middot;
-       <a href="https://extendi.github.io/react-gate/docs">Docs</a> &middot;
-       <a href="https://github.com/extendi/react-gate">GitHub</a>
+        </a>
+        <span className="mx-2">&middot;</span>
+        <a href="https://extendi.github.io/react-gate/docs">Docs</a>
+        <span className="mx-2">&middot;</span>
+        <a href="https://github.com/extendi/react-gate">GitHub</a>
       </div>
     </footer>
   </React.Fragment>
